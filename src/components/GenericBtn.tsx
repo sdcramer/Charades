@@ -1,17 +1,18 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native-web";
+import { View, Text, TouchableOpacity, Pressable, StyleSheet } from "react-native-web";
 
 const GenericBtn = (props: {
-  setGamePhase: Function;
+  setStateFunction: Function;
   title: string;
-  gamePhase: string;
+  option: string | boolean;
+
+  
   
 }) => {
-  const { setGamePhase, title, gamePhase } = props;
-  console.log("GenricBtn pressed; gamePhase =", gamePhase);
+  const { setStateFunction, title, option } = props;
 
   return (
     <View style={styles.button}>
-      <TouchableOpacity onPress={() => setGamePhase(gamePhase)}>
+      <TouchableOpacity onPress={() => setStateFunction(option)}>
         <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     </View>

@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { View } from "react-native-web";
+import { View } from 'react-native-web';
 import Counter from "./Counter";
 
 const PreTurnCounter = (props: {
   seconds: number;
-  isCountFinished: Boolean;
   setGamePhase: Function;
-  setIsCountFinished: Function;
 }) => {
-  const { isCountFinished, setGamePhase, setIsCountFinished, seconds } = props;
+  const { setGamePhase, seconds } = props;
+  
+  const [isCountFinished, setIsCountFinished] = useState(false);
 
   useEffect(() => {
-    if (!isCountFinished) {
+    if (isCountFinished) {
       setGamePhase("turn");
     }
   }, [isCountFinished]);

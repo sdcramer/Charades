@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View } from "react-native-web";
+import { View, Text } from "react-native-web";
 
 const Counter = (props: {
   seconds: number;
@@ -10,8 +10,12 @@ const Counter = (props: {
     setIsCountFinished,
   } = props;
 
-  const [count , setCount] = useState<number>(seconds);
-
+  const [count, setCount] = useState<number>(seconds);
+  
+  // useEffect(() => {
+  //   setIsCountFinished(false);
+  // }, [])
+  
   useEffect(() => {
     let timer: NodeJS.Timer;
     if (count > 0) {
@@ -24,14 +28,11 @@ const Counter = (props: {
     };
   }, [count]);
 
-  useEffect(() => {
-    setIsCountFinished(false);
-  }, [])
 
   return (
-    <>
-      <View>{count}</View>
-    </>
+    <View>
+      <Text>{count}</Text>
+    </View>
   );
 };
 

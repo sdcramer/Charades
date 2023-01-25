@@ -34,14 +34,14 @@ const Turn = (props: {
         <Text>I'm the turn phase being shown after a 3 second delay</Text>
       ) : null}
 
-      {/* /* <View style={styles.container}>
+      /* <View style={styles.container}>
         <ImageBackground source={'src/components/assets/placeholder.png'} style={styles.image}>
         <View style={styles.container2}>
             <Text style={styles.text}>√ or X</Text>
 
         </View>
       </ImageBackground>
-      </View> */}
+      </View>
     </>
   );
 };

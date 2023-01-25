@@ -1,17 +1,21 @@
 import Counter from "./Counter";
-import QuitBtn from "./QuitBtn";
 import { View } from "react-native-web";
+import { useState } from "react";
+import QuitModal from "./QuitModal";
 
-const NavBar = (props: { seconds: number; setIsCountFinished: Function; gamePhase: string; setGamePhase: Function; asset: string; role: string }) => {
-  const { seconds, setIsCountFinished, gamePhase, setGamePhase, asset, role} = props;
+const NavBar = (props: { seconds: number; nextGamePhase: string; setGamePhase: Function; asset: string; role: string;  title: string[]}) => {
+  const { seconds, setGamePhase, asset, role, nextGamePhase, title } = props;
+  
+  const [isCountFinished, setIsCountFinished] = useState(false)
+  
   return (
-    <View>
+    <>
       <Counter
         seconds={seconds}
         setIsCountFinished={setIsCountFinished}
       ></Counter>
-      <QuitBtn gamePhase={gamePhase} setGamePhase={setGamePhase} source={asset} accessbilityRole={role}></QuitBtn>
-    </View>
+      <QuitModal setGamePhase={setGamePhase} nextGamePhase={nextGamePhase} title={title} ></QuitModal>
+    </>
   );
 };
 

@@ -17,8 +17,9 @@ const FiltersAccordion = (props: {
   accordionName: string;
   genericInputNames: string[];
   charadeCards: IsCard[];
+  setAgeGroup: Function;
 }) => {
-  const { accordionName, genericInputNames, charadeCards } = props;
+  const { accordionName, genericInputNames, charadeCards, setAgeGroup } = props;
 
   return (
     <Accordion accordionName={accordionName}>

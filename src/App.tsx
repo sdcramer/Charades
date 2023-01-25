@@ -5,10 +5,10 @@ import { View, Text, StyleSheet } from "react-native-web";
 import TeamsAccordion from "./components/TeamsAccordion";
 import RoundsAccordion from "./components/RoundsAccordion";
 import FiltersAccordion from "./components/FiltersAccordion";
-import Counter from "./components/Counter";
 import PreTurnCounter from "./components/PreTurnCounter";
 import NavBar from "./components/NavBar";
 import CardView from "./components/CardView";
+import QuiteModal from "./components/QuitModal";
 
 export interface IsCard {
   id: number;
@@ -55,6 +55,14 @@ const App = () => {
 
   const gameState = {
     rounds: 4,
+    age: {
+      min: 14,
+      max: 55,
+    },
+    year: {
+      min: 1990,
+      max: 2000,
+    },
     team1: {
       completedRounds: 0,
       score: 0,
@@ -68,6 +76,21 @@ const App = () => {
       score: 0,
     },
   };
+
+  /**
+   * Age Bracket
+   * () kids
+   * (o) teens
+   * () adults
+   *
+   * Categories
+   * [x] 70's
+   * [x] 80's
+   * [] 90's
+   * [] animals
+   * [x] food
+   * [] music
+   */
 
   // const [gameState, setGameState] = useState({})
 
@@ -86,15 +109,15 @@ const App = () => {
   //   setGameState(newGameState)
   // }
 
-  const [isCountFinished, setIsCountFinished] = useState(true);
   const [numOfTeams, setNumOfTeams] = useState<2 | 3 | 4>(2);
   const [numOfRounds, setNumOfRounds] = useState<3 | 5 | 7>(3);
   const [numOfRoundTime, setNumOfRoundTime] = useState<30 | 60 | 90>(30);
+  const [ageGroup, setAgeGroup] = useState< "kids" | "teens" | "adults">("kids")
 
   const teamOptions = ["2", "3", "4"];
   const roundOptions = ["3", "5", "7"];
   const roundTimes = ["3", "30", "60", "90"];
-  const genericBtnNames = ["Start", "Continue", "Ready", "Go"];
+  const genericBtnNames = ["Start", "Continue", "Ready", "Go", "No", "Yes", "Back", "Quit"];
   const genericInputNames = ["Age", "Year"];
   const accordionNames: AccordionNames = ["Teams", "Rounds", "Filters"];
 
@@ -133,21 +156,24 @@ const App = () => {
 
   if (gamePhase === "start") {
     return (
-      <>
-        <View style={styles.container1}>
-          <Text>Charades</Text>
-          <GenericBtn
-            setGamePhase={setGamePhase}
-            title={genericBtnNames[0]}
-            gamePhase={"settings"}
-          />
-        </View>
-      </>
+      <View style={styles.container1}>
+        <Text>Charades</Text>
+        <GenericBtn
+          setStateFunction={setGamePhase}
+          title={genericBtnNames[0]}
+          option={"settings"}
+        />
+      </View>
     );
   } else if (gamePhase === "settings") {
     return (
       <>
         <View style={styles.container1}>
+          <GenericBtn
+            setStateFunction={setGamePhase}
+            title={genericBtnNames[6]}
+            option={"start"}
+          />
           <TeamsAccordion
             accordionName={accordionNames[0]}
             teamOptions={teamOptions}
@@ -164,11 +190,13 @@ const App = () => {
             accordionName={accordionNames[2]}
             genericInputNames={genericInputNames}
             charadeCards={charadeCards}
+            setAgeGroup={setAgeGroup}
+            
           />
           <GenericBtn
-            setGamePhase={setGamePhase}
+            setStateFunction={setGamePhase}
             title={genericBtnNames[2]}
-            gamePhase={"preTurn"}
+            option={"preTurn"}
           />
         </View>
       </>
@@ -177,45 +205,44 @@ const App = () => {
     return (
       <>
         <View>
+          <GenericBtn
+            setStateFunction={setGamePhase}
+            title={genericBtnNames[6]}
+            option={"settings"}
+          />
           <Text>Team 1's turn</Text>
           <Text>Press Go when ready</Text>
           <GenericBtn
-            setGamePhase={setGamePhase}
+            setStateFunction={setGamePhase}
             title={genericBtnNames[3]}
-            gamePhase={"preTurnCountDown"}
+            option={"preTurnCountDown"}
           />
         </View>
       </>
     );
   } else if (gamePhase === "preTurnCountDown") {
+    return <PreTurnCounter setGamePhase={setGamePhase} seconds={3} />;
+  } else if (gamePhase === "turn") {
     return (
       <>
-        <View>
-          <PreTurnCounter
-            setGamePhase={setGamePhase}
-            isCountFinished={isCountFinished}
-            setIsCountFinished={setIsCountFinished}
-            seconds={3}
-          />
-        </View>
+        <NavBar
+          seconds={5}
+          nextGamePhase={"start"}
+          setGamePhase={setGamePhase}
+          asset={"./assets/BackArrow.png"}
+          role={"imagebutton"}
+          title={genericBtnNames}
+        />
+        <CardView></CardView>
+
+        
       </>
     );
   }
-  
-  // else if (gamePhase === "turn") {
+  // else if (gamePhase === "quit") {
   //   return (
   //     <>
-  //       <View>
-  //         <NavBar
-  //           seconds={5}
-  //           setIsCountFinished={setIsCountFinished}
-  //           gamePhase={"quit"}
-  //           setGamePhase={setGamePhase}
-  //           asset={"./assets/BackArrow.png"}
-  //           role={"imagebutton"}
-  //         ></NavBar>
-  //         <CardView></CardView>
-  //       </View>
+  //       <QuiteModal setGamePhase={setGamePhase} nextGamePhase={"start"} title={genericBtnNames}></QuiteModal>
   //     </>
   //   );
   // }
