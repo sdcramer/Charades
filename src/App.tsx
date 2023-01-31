@@ -18,6 +18,11 @@ export interface IsCard {
   age: number;
 }
 
+export interface Category {
+  id: number;
+  name: string;
+}
+
 const App = () => {
   type AccordionNames = string[];
 
@@ -112,13 +117,41 @@ const App = () => {
   const [numOfTeams, setNumOfTeams] = useState<2 | 3 | 4>(2);
   const [numOfRounds, setNumOfRounds] = useState<3 | 5 | 7>(3);
   const [numOfRoundTime, setNumOfRoundTime] = useState<30 | 60 | 90>(30);
-  const [ageGroup, setAgeGroup] = useState< "kids" | "teens" | "adults">("kids")
+  const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [minYear, setMinYear] = useState();
+  const [maxYear, setMaxYear] = useState();
 
-  const teamOptions = ["2", "3", "4"];
+  const teamOptions = [2, 3, 4];
   const roundOptions = ["3", "5", "7"];
   const roundTimes = ["3", "30", "60", "90"];
-  const genericBtnNames = ["Start", "Continue", "Ready", "Go", "No", "Yes", "Back", "Quit"];
+  const genericBtnNames = [
+    "Start",
+    "Continue",
+    "Ready",
+    "Go",
+    "No",
+    "Yes",
+    "Back",
+    "Quit",
+  ];
   const genericInputNames = ["Age", "Year"];
+  const genericSelectorNames = ["Kids", "Teens", "Adults"];
+  const categories = [
+    {
+      id: 1,
+      name: "movies",
+    },
+    {
+      id: 2,
+      name: "animals",
+    },
+    {
+      id: 3,
+      name: "food",
+    },
+  ];
+
   const accordionNames: AccordionNames = ["Teams", "Rounds", "Filters"];
 
   // const [teamTurn, setTeamTurn] = useState<1 | 2 | 3 | 4>(1);
@@ -127,6 +160,10 @@ const App = () => {
   console.log("numOfTeams =", numOfTeams);
   console.log("numOfRounds =", numOfRounds);
   console.log("numOfRoundTime =", numOfRoundTime);
+  console.log("ageGroup =", ageGroup);
+  console.log("selectedCategories =", selectedCategories )
+  console.log("minYear =", minYear)
+  console.log("maxYear =", maxYear)
 
   const charadeCards: IsCard[] = [
     {
@@ -169,15 +206,11 @@ const App = () => {
     return (
       <>
         <View style={styles.container1}>
-          <GenericBtn
-            setStateFunction={setGamePhase}
-            title={genericBtnNames[6]}
-            option={"start"}
-          />
           <TeamsAccordion
             accordionName={accordionNames[0]}
             teamOptions={teamOptions}
             setNumOfTeams={setNumOfTeams}
+            numOfTeams={numOfTeams}
           />
           <RoundsAccordion
             accordionName={accordionNames[1]}
@@ -185,17 +218,34 @@ const App = () => {
             roundTimes={roundTimes}
             setNumOfRounds={setNumOfRounds}
             setNumOfRoundTime={setNumOfRoundTime}
+            numOfRounds={numOfRounds}
+            numOfRoundTime={numOfRoundTime}
           />
           <FiltersAccordion
             accordionName={accordionNames[2]}
             genericInputNames={genericInputNames}
+            genericSelectorNames={genericSelectorNames}
             charadeCards={charadeCards}
+            ageGroup={ageGroup}
             setAgeGroup={setAgeGroup}
-            
+            categories={categories}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+            option={"Year"}
+            minYear={minYear}
+            maxYear={maxYear}
+            setMinYear={setMinYear}
+            setMaxYear={setMaxYear}
+          />
+
+          <GenericBtn
+            setStateFunction={setGamePhase}
+            title={"Back"}
+            option={"start"}
           />
           <GenericBtn
             setStateFunction={setGamePhase}
-            title={genericBtnNames[2]}
+            title={"Ready"}
             option={"preTurn"}
           />
         </View>
@@ -231,11 +281,9 @@ const App = () => {
           setGamePhase={setGamePhase}
           asset={"./assets/BackArrow.png"}
           role={"imagebutton"}
-          title={genericBtnNames}
+          genericBtnNames={genericBtnNames}
         />
         <CardView></CardView>
-
-        
       </>
     );
   }
@@ -253,6 +301,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexBasis: "100%",
+  },
+
+  container2: {
+    backgroundColor: "orange",
   },
 });
 

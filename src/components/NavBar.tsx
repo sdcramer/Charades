@@ -3,8 +3,8 @@ import { View } from "react-native-web";
 import { useState } from "react";
 import QuitModal from "./QuitModal";
 
-const NavBar = (props: { seconds: number; nextGamePhase: string; setGamePhase: Function; asset: string; role: string;  title: string[]}) => {
-  const { seconds, setGamePhase, asset, role, nextGamePhase, title } = props;
+const NavBar = (props: { seconds: number; nextGamePhase: string; setGamePhase: Function; asset: string; role: string;  genericBtnNames: string[]}) => {
+  const { seconds, setGamePhase, asset, role, nextGamePhase, genericBtnNames } = props;
   
   const [isCountFinished, setIsCountFinished] = useState(false)
   
@@ -14,7 +14,7 @@ const NavBar = (props: { seconds: number; nextGamePhase: string; setGamePhase: F
         seconds={seconds}
         setIsCountFinished={setIsCountFinished}
       ></Counter>
-      <QuitModal setGamePhase={setGamePhase} nextGamePhase={nextGamePhase} title={title} ></QuitModal>
+      <QuitModal setGamePhase={setGamePhase} nextGamePhase={nextGamePhase} genericBtnNames={genericBtnNames} option={true}></QuitModal>
     </>
   );
 };

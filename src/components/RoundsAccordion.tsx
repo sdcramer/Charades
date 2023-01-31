@@ -9,13 +9,15 @@ const RoundsAccordion = (props: {
   roundTimes: string[];
   setNumOfRounds: Function;
   setNumOfRoundTime: Function;
+  numOfRounds: number;
+  numOfRoundTime: number;
 }) => {
-  const { accordionName, roundOptions, roundTimes, setNumOfRounds, setNumOfRoundTime } = props;
+  const { accordionName, roundOptions, roundTimes, setNumOfRounds, setNumOfRoundTime, numOfRounds, numOfRoundTime } = props;
 
   return (
     <Accordion accordionName={accordionName}>
-      <GenericSelector options={roundOptions} stateFunction={setNumOfRounds}></GenericSelector>
-      <GenericSelector options={roundTimes} stateFunction={setNumOfRoundTime}></GenericSelector>
+      <GenericSelector  options={roundOptions} stateFunction={setNumOfRounds} stateVariable={numOfRounds}></GenericSelector>
+      <GenericSelector sectionTitle={"Round Time"} options={roundTimes} stateFunction={setNumOfRoundTime} stateVariable={numOfRoundTime}></GenericSelector>
     </Accordion>
   );
 };

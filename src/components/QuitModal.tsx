@@ -1,10 +1,8 @@
 import {
   View,
   Modal,
-  TouchableOpacity,
   Text,
   StyleSheet,
-  Pressable
 } from "react-native-web";
 import { useState } from "react";
 import GenericBtn from "./GenericBtn";
@@ -12,11 +10,11 @@ import GenericBtn from "./GenericBtn";
 const QuitModal = (props: {
   setGamePhase: Function;
   nextGamePhase: string;
-  title: string[];
-  isModalVisible: boolean;
-  setIsModalVisible: Function;
+  genericBtnNames: string[];
+  setStateFunction?: Function;
+  option: string | boolean;
 }) => {
-  const { setGamePhase, nextGamePhase, title } = props;
+  const { setGamePhase, nextGamePhase, genericBtnNames } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
   console.log(isModalVisible);
 
@@ -25,34 +23,31 @@ const QuitModal = (props: {
       <Modal
         animationType="slide"
         visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(!isModalVisible) }
+        onRequestClose={() => setIsModalVisible(!isModalVisible)}
       >
         <View style={styles.centeredView}>
           <Text>Hi I'm the Modal</Text>
           <View>
-            <Pressable onPress={() => setIsModalVisible(false)}>
-              <Text style={styles.modalText}>NO</Text>
-            </Pressable>
+            <GenericBtn
+              setStateFunction={setIsModalVisible}
+              title={genericBtnNames[4]}
+              option={false}
+            ></GenericBtn>
           </View>
           <View>
-            <Pressable onPress={() => setGamePhase(nextGamePhase)}>
-              <Text style={styles.modalText}>YES</Text>
-            </Pressable>
+            <GenericBtn
+              setStateFunction={setGamePhase}
+              title={genericBtnNames[5]}
+              option={nextGamePhase}
+            ></GenericBtn>
           </View>
-          {/* <GenericBtn
-            setStateFunction={setIsModalVisible}
-            option={nextGamePhase}
-            title={title[4]}
-          ></GenericBtn>
-          <GenericBtn
-            setStateFunction={setGamePhase}
-            option={false}
-            title={title[5]}
-          ></GenericBtn> */}
         </View>
       </Modal>
-      <GenericBtn setStateFunction={setIsModalVisible} title={title[7]} option={true}>
-      </GenericBtn>
+      <GenericBtn
+        setStateFunction={setIsModalVisible}
+        title={genericBtnNames[6]}
+        option={true}
+      ></GenericBtn>
     </View>
   );
 };
@@ -66,11 +61,10 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   modalText: {
-    marginBottom: 15, 
-    textAlign: 'center',
-    textColor: 'black',
-  }
-
+    marginBottom: 15,
+    textAlign: "center",
+    textColor: "black",
+  },
 });
 
 export default QuitModal;

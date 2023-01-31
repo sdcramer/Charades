@@ -6,14 +6,15 @@ import Accordion from "./Accordion";
 
 const TeamsAccordion = (props: {
   accordionName: string;
-  teamOptions: string[];
+  teamOptions: number[];
   setNumOfTeams: Function;
+  numOfTeams: number;
 }) => {
-  const { accordionName, teamOptions, setNumOfTeams } = props;
+  const { accordionName, teamOptions, setNumOfTeams, numOfTeams} = props;
 
   return (
     <Accordion accordionName={accordionName}>
-      <GenericSelector options={teamOptions} stateFunction={setNumOfTeams}></GenericSelector>
+      <GenericSelector options={teamOptions} stateFunction={setNumOfTeams} stateVariable={numOfTeams}></GenericSelector>
     </Accordion>
   );
 };
