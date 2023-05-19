@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,43 +13,71 @@ import Accordion from "./Accordion";
 import GenericInput from "./GenericInput";
 import SearchBar from "./SearchBar";
 import GenericSelector from "./GenericSelector";
-import { IsCard } from "../App";
-import { Category } from "../App";
+import { IsCard, Category, GameState } from "../App";
 
 const FiltersAccordion = (props: {
   accordionName: string;
   genericInputNames: string[];
   genericSelectorNames: string[];
   charadeCards: IsCard[];
-  ageGroup: string;
-  setAgeGroup: Function;
-  selectedCategories: string[];
-  setSelectedCategories: Function;
-  categories: Category[];
   option: string;
-  setMinYear: Function;
-  setMaxYear: Function;
-  minYear: number;
-  maxYear: number;
+  gameState: GameState;
+  setGameState: Function;
+  categories: Category[];
 }) => {
   const {
     accordionName,
-    genericInputNames,
-    charadeCards,
-    ageGroup,
-    setAgeGroup,
     genericSelectorNames,
-    selectedCategories,
-    setSelectedCategories,
-    categories,
     option,
-    setMinYear,
-    setMaxYear,
-    minYear,
-    maxYear,
+    categories,
+    gameState,
+    setGameState,
   } = props;
+  const [isPhotoMode, setIsPhotoMode] = useState(false);
+  const [filteredSearchCategories, setFilteredSearchCategories] = useState<
+    Category[]
+  >([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
+  const [minYear, setMinYear] = useState(0);
+  const [maxYear, setMaxYear] = useState(0);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const [isEnabled, setIsEnabled] = useState(false);
+  useEffect(() => {
+    setFilteredSearchCategories(categories);
+  }, []);
+
+  useEffect(() => {
+    const newGameState = structuredClone(gameState);
+    newGameState.age = ageGroup;
+    setGameState(newGameState);
+  }, [ageGroup]);
+
+  useEffect(() => {
+    const newGameState = structuredClone(gameState);
+    newGameState.year.min = minYear;
+    setGameState(newGameState);
+  }, [minYear]);
+
+  useEffect(() => {
+    const newGameState = structuredClone(gameState);
+    newGameState.year.max = maxYear;
+    setGameState(newGameState);
+  }, [maxYear]);
+
+  useEffect(() => {
+    const newGameState = structuredClone(gameState);
+    newGameState.photo = isPhotoMode;
+    setGameState(newGameState);
+  }, [isPhotoMode]);
+
+  useEffect(() => {
+    const newGameState = structuredClone(gameState);
+    newGameState.categories = selectedCategories;
+    setGameState(newGameState);
+  }, [selectedCategories]);
+
+  console.log('after useEffects on FiltersAccordion run, gameState =', gameState)
 
   const categoryHandler = (itemName: string) => {
     let chosenCategories = selectedCategories;
@@ -61,7 +89,16 @@ const FiltersAccordion = (props: {
     } else {
       chosenCategories = [...selectedCategories, itemName];
       setSelectedCategories(chosenCategories);
+      setSearchTerm("");
+      setFilteredSearchCategories(categories);
     }
+  };
+
+  const handleAvailableCategories = (str: string) => {
+    const filteredSearch = categories.filter((category) =>
+      category.name.startsWith(str)
+    );
+    setFilteredSearchCategories(filteredSearch);
   };
 
   return (
@@ -73,17 +110,27 @@ const FiltersAccordion = (props: {
         stateVariable={ageGroup}
       ></GenericSelector>
       <GenericInput
-        sectionTitle={option} setMinYear={setMinYear} setMaxYear={setMaxYear} minYear={minYear} maxYear={maxYear}></GenericInput>
-        
+        sectionTitle={option}
+        setMinYear={setMinYear}
+        setMaxYear={setMaxYear}
+        minYear={minYear}
+        maxYear={maxYear}
+      ></GenericInput>
+
       <Text>{"Photos Only"}</Text>
       <Switch
-        value={isEnabled}
-        onValueChange={() => setIsEnabled(!isEnabled)}
+        value={isPhotoMode}
+        onValueChange={() => setIsPhotoMode(!isPhotoMode)}
       ></Switch>
       <Text>{"Categories"}</Text>
-      <SearchBar charadeCards={charadeCards} />
+      <SearchBar
+        handleAvailableCategories={handleAvailableCategories}
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
+      />
+
       <FlatList
-        data={categories}
+        data={filteredSearchCategories}
         keyExtractor={(item: Category) => item.id}
         renderItem={({ item }: { item: Category }) => (
           <Pressable onPress={() => categoryHandler(item.name)}>
@@ -99,6 +146,15 @@ const FiltersAccordion = (props: {
           </Pressable>
         )}
       />
+      <Pressable
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? "rgb(210, 230, 255)" : "white",
+          },
+        ]}
+      >
+        <Text>{}</Text>
+      </Pressable>
     </Accordion>
   );
 };

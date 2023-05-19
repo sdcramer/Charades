@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Accordion from "./components/TeamsAccordion";
 import GenericBtn from "./components/GenericBtn";
 import { View, Text, StyleSheet } from "react-native-web";
 import TeamsAccordion from "./components/TeamsAccordion";
@@ -8,7 +7,11 @@ import FiltersAccordion from "./components/FiltersAccordion";
 import PreTurnCounter from "./components/PreTurnCounter";
 import NavBar from "./components/NavBar";
 import CardView from "./components/CardView";
-import QuiteModal from "./components/QuitModal";
+import ScoreBtn from "./components/ScoreBtn";
+import ContinueBtn from "./components/ContinueBtn";
+import EndGameSummary from "./components/LeaderBoard";
+import MissedBtn from "./components/MissedBtn";
+import QuitModal from './components/QuitModal';
 
 export interface IsCard {
   id: number;
@@ -21,6 +24,30 @@ export interface IsCard {
 export interface Category {
   id: number;
   name: string;
+}
+
+interface Year {
+  min: number;
+  max: number;
+}
+
+export interface Team {
+  completedRounds: number;
+  score: number;
+  missed: number;
+}
+
+export interface GameState {
+  rank: number[];
+  currentTeamsTurn: number;
+  numOfTeams: number;
+  rounds: number;
+  currentRound: number;
+  roundTime: number;
+  age: string;
+  year: Year;
+  categories: string[];
+  teams: Record<string, Team>;
 }
 
 const App = () => {
@@ -37,94 +64,35 @@ const App = () => {
     | "quit"
   >("start");
 
-  // const gameState = {
-  //   teams: [
-  //     {
-  //       name: "team1",
-  //       completedRounds: 0,
-  //       score: 0
-  //     },
-  //     {
-  //       name: "team2",
-  //       completedRounds: 0,
-  //       score: 0
-  //     },
-  //     {
-  //       name: "team3",
-  //       completedRounds: 0,
-  //       score: 0
-  //     }
-  //   ],
-  //   rounds: 4,
-  // }
-
-  const gameState = {
-    rounds: 4,
-    age: {
-      min: 14,
-      max: 55,
-    },
+  const initialGameState: GameState = {
+    rank: [],
+    currentTeamsTurn: 1,
+    numOfTeams: 2,
+    rounds: 3,
+    currentRound: 1,
+    roundTime: 30,
+    age: "",
     year: {
-      min: 1990,
-      max: 2000,
+      min: 0,
+      max: 0,
     },
-    team1: {
-      completedRounds: 0,
-      score: 0,
-    },
-    team2: {
-      completedRounds: 0,
-      score: 0,
-    },
-    team3: {
-      completedRounds: 0,
-      score: 0,
+    categories: [],
+    teams: {
+      1: {
+        completedRounds: 0,
+        score: 0,
+        missed: 0,
+      },
+      2: {
+        completedRounds: 0,
+        score: 0,
+        missed: 0,
+      },
     },
   };
 
-  /**
-   * Age Bracket
-   * () kids
-   * (o) teens
-   * () adults
-   *
-   * Categories
-   * [x] 70's
-   * [x] 80's
-   * [] 90's
-   * [] animals
-   * [x] food
-   * [] music
-   */
-
-  // const [gameState, setGameState] = useState({})
-
-  // const createGameState = (numberOfTeams, numOfRounds) => {
-  //   // const newGameState = {teams: [], rounds: numOfRounds};
-
-  //   // for (let i = 0; i < numberOfTeams; i++) {
-  //   //   newGameState.teams.push({name: `Team ${i+1}`, completedRounds: 0, score: 0})
-  //   // }
-
-  //   const newGameState = {rounds: numOfRounds}
-  //   for (let i = 1; i <= numberOfTeams; i++) {
-  //     newGameState[`team${i}`] = {completedRounds:0, score: 0}
-  //   }
-
-  //   setGameState(newGameState)
-  // }
-
-  const [numOfTeams, setNumOfTeams] = useState<2 | 3 | 4>(2);
-  const [numOfRounds, setNumOfRounds] = useState<3 | 5 | 7>(3);
-  const [numOfRoundTime, setNumOfRoundTime] = useState<30 | 60 | 90>(30);
-  const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [minYear, setMinYear] = useState();
-  const [maxYear, setMaxYear] = useState();
-
+  const [gameState, setGameState] = useState(initialGameState);
   const teamOptions = [2, 3, 4];
-  const roundOptions = ["3", "5", "7"];
-  const roundTimes = ["3", "30", "60", "90"];
   const genericBtnNames = [
     "Start",
     "Continue",
@@ -137,7 +105,10 @@ const App = () => {
   ];
   const genericInputNames = ["Age", "Year"];
   const genericSelectorNames = ["Kids", "Teens", "Adults"];
-  const categories = [
+  const accordionNames: AccordionNames = ["Teams", "Rounds", "Filters"];
+
+  
+  const categories: Category[] = [
     {
       id: 1,
       name: "movies",
@@ -151,19 +122,6 @@ const App = () => {
       name: "food",
     },
   ];
-
-  const accordionNames: AccordionNames = ["Teams", "Rounds", "Filters"];
-
-  // const [teamTurn, setTeamTurn] = useState<1 | 2 | 3 | 4>(1);
-  // const [currentRound, setCurrentRound] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
-
-  console.log("numOfTeams =", numOfTeams);
-  console.log("numOfRounds =", numOfRounds);
-  console.log("numOfRoundTime =", numOfRoundTime);
-  console.log("ageGroup =", ageGroup);
-  console.log("selectedCategories =", selectedCategories )
-  console.log("minYear =", minYear)
-  console.log("maxYear =", maxYear)
 
   const charadeCards: IsCard[] = [
     {
@@ -209,33 +167,23 @@ const App = () => {
           <TeamsAccordion
             accordionName={accordionNames[0]}
             teamOptions={teamOptions}
-            setNumOfTeams={setNumOfTeams}
-            numOfTeams={numOfTeams}
+            gameState={gameState}
+            setGameState={setGameState}
           />
           <RoundsAccordion
             accordionName={accordionNames[1]}
-            roundOptions={roundOptions}
-            roundTimes={roundTimes}
-            setNumOfRounds={setNumOfRounds}
-            setNumOfRoundTime={setNumOfRoundTime}
-            numOfRounds={numOfRounds}
-            numOfRoundTime={numOfRoundTime}
+            gameState={gameState}
+            setGameState={setGameState}
           />
           <FiltersAccordion
             accordionName={accordionNames[2]}
             genericInputNames={genericInputNames}
             genericSelectorNames={genericSelectorNames}
             charadeCards={charadeCards}
-            ageGroup={ageGroup}
-            setAgeGroup={setAgeGroup}
-            categories={categories}
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
             option={"Year"}
-            minYear={minYear}
-            maxYear={maxYear}
-            setMinYear={setMinYear}
-            setMaxYear={setMaxYear}
+            categories={categories}
+            gameState={gameState}
+            setGameState={setGameState}
           />
 
           <GenericBtn
@@ -255,16 +203,15 @@ const App = () => {
     return (
       <>
         <View>
-          <GenericBtn
-            setStateFunction={setGamePhase}
-            title={genericBtnNames[6]}
-            option={"settings"}
+          <QuitModal
+            setGamePhase={setGamePhase}
           />
-          <Text>Team 1's turn</Text>
+          <Text>Round {gameState.currentRound}</Text>
+          <Text>Team {gameState.currentTeamsTurn}'s turn</Text>
           <Text>Press Go when ready</Text>
           <GenericBtn
             setStateFunction={setGamePhase}
-            title={genericBtnNames[3]}
+            title={"Go"}
             option={"preTurnCountDown"}
           />
         </View>
@@ -277,23 +224,39 @@ const App = () => {
       <>
         <NavBar
           seconds={5}
-          nextGamePhase={"start"}
           setGamePhase={setGamePhase}
           asset={"./assets/BackArrow.png"}
           role={"imagebutton"}
           genericBtnNames={genericBtnNames}
         />
         <CardView></CardView>
+
+        <MissedBtn gameState={gameState} setGameState={setGameState} />
+        <ScoreBtn gameState={gameState} setGameState={setGameState} />
       </>
     );
+  } else if (gamePhase === "postTurn") {
+    return (
+      <>
+        <NavBar
+          seconds={5}
+          setGamePhase={setGamePhase}
+          asset={"./assets/BackArrow.png"}
+          role={"imagebutton"}
+          genericBtnNames={genericBtnNames}
+        />
+        <CardView></CardView>
+        <ContinueBtn
+          title={"Continue"}
+          setGamePhase={setGamePhase}
+          gameState={gameState}
+          setGameState={setGameState}
+        ></ContinueBtn>
+      </>
+    );
+  } else if (gamePhase === "endGame") {
+    return <EndGameSummary gameState={gameState}></EndGameSummary>;
   }
-  // else if (gamePhase === "quit") {
-  //   return (
-  //     <>
-  //       <QuiteModal setGamePhase={setGamePhase} nextGamePhase={"start"} title={genericBtnNames}></QuiteModal>
-  //     </>
-  //   );
-  // }
 };
 const styles = StyleSheet.create({
   container1: {

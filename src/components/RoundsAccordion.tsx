@@ -1,23 +1,49 @@
-
+import { useState, useEffect } from "react";
 import GenericSelector from "./GenericSelector";
 import Accordion from "./Accordion";
 import { StyleSheet } from "react-native-web";
+import { GameState } from "../App";
 
 const RoundsAccordion = (props: {
   accordionName: string;
-  roundOptions: string[];
-  roundTimes: string[];
-  setNumOfRounds: Function;
-  setNumOfRoundTime: Function;
-  numOfRounds: number;
-  numOfRoundTime: number;
+  gameState: GameState;
+  setGameState: Function;
 }) => {
-  const { accordionName, roundOptions, roundTimes, setNumOfRounds, setNumOfRoundTime, numOfRounds, numOfRoundTime } = props;
+  const { accordionName, gameState, setGameState } = props;
+  const [numOfRounds, setNumOfRounds] = useState<3 | 5 | 7>(3);
+  const [numOfRoundTime, setNumOfRoundTime] = useState<30 | 60 | 90>(30);
+  const roundTimes = ["3", "30", "60", "90"];
+  const roundOptions = ["3", "5", "7"];
+
+  useEffect(() => {
+    const newGameState = structuredClone(gameState);
+    newGameState.rounds = numOfRounds;
+    setGameState(newGameState);
+  }, [numOfRounds]);
+  
+  
+  useEffect(() => {
+    const newGameState = structuredClone(gameState);
+    newGameState.roundTime = numOfRoundTime;
+    setGameState(newGameState);
+  }, [numOfRoundTime]);
+  
+  console.log('after useEffects run RoundsAccordion, gameState =', gameState)
+
 
   return (
     <Accordion accordionName={accordionName}>
-      <GenericSelector  options={roundOptions} stateFunction={setNumOfRounds} stateVariable={numOfRounds}></GenericSelector>
-      <GenericSelector sectionTitle={"Round Time"} options={roundTimes} stateFunction={setNumOfRoundTime} stateVariable={numOfRoundTime}></GenericSelector>
+      <GenericSelector
+        options={roundOptions}
+        stateFunction={setNumOfRounds}
+        stateVariable={numOfRounds}
+      ></GenericSelector>
+      <GenericSelector
+        sectionTitle={"Round Time"}
+        options={roundTimes}
+        stateFunction={setNumOfRoundTime}
+        stateVariable={numOfRoundTime}
+      ></GenericSelector>
     </Accordion>
   );
 };

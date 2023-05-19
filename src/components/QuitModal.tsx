@@ -1,22 +1,12 @@
-import {
-  View,
-  Modal,
-  Text,
-  StyleSheet,
-} from "react-native-web";
+import { View, Modal, Text, StyleSheet } from "react-native-web";
 import { useState } from "react";
 import GenericBtn from "./GenericBtn";
 
 const QuitModal = (props: {
   setGamePhase: Function;
-  nextGamePhase: string;
-  genericBtnNames: string[];
-  setStateFunction?: Function;
-  option: string | boolean;
 }) => {
-  const { setGamePhase, nextGamePhase, genericBtnNames } = props;
+  const { setGamePhase } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
-  console.log(isModalVisible);
 
   return (
     <View>
@@ -30,22 +20,22 @@ const QuitModal = (props: {
           <View>
             <GenericBtn
               setStateFunction={setIsModalVisible}
-              title={genericBtnNames[4]}
+              title={"No"}
               option={false}
             ></GenericBtn>
           </View>
           <View>
             <GenericBtn
               setStateFunction={setGamePhase}
-              title={genericBtnNames[5]}
-              option={nextGamePhase}
+              title={"Yes"}
+              option={"start"}
             ></GenericBtn>
           </View>
         </View>
       </Modal>
       <GenericBtn
         setStateFunction={setIsModalVisible}
-        title={genericBtnNames[6]}
+        title={"Back"}
         option={true}
       ></GenericBtn>
     </View>

@@ -1,20 +1,37 @@
 import Counter from "./Counter";
 import { View } from "react-native-web";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QuitModal from "./QuitModal";
 
-const NavBar = (props: { seconds: number; nextGamePhase: string; setGamePhase: Function; asset: string; role: string;  genericBtnNames: string[]}) => {
-  const { seconds, setGamePhase, asset, role, nextGamePhase, genericBtnNames } = props;
-  
-  const [isCountFinished, setIsCountFinished] = useState(false)
-  
+const NavBar = (props: {
+  seconds: number;
+  setGamePhase: Function;
+  asset: string;
+  role: string;
+  genericBtnNames: string[];
+}) => {
+  const { seconds, setGamePhase, asset, role } = props;
+
+  const [isNavCountFinished, setIsNavCountFinished] = useState(false);
+  // const [showCounter, setShowCounter] = useState(true);
+
+  useEffect(() => {
+    if (isNavCountFinished) {
+      setGamePhase("postTurn");
+      // setShowCounter(false);
+    }
+  });
+
   return (
     <>
       <Counter
         seconds={seconds}
-        setIsCountFinished={setIsCountFinished}
+        setIsCountFinished={setIsNavCountFinished}
       ></Counter>
-      <QuitModal setGamePhase={setGamePhase} nextGamePhase={nextGamePhase} genericBtnNames={genericBtnNames} option={true}></QuitModal>
+      <QuitModal
+        setGamePhase={setGamePhase}
+        option={true}
+      ></QuitModal>
     </>
   );
 };

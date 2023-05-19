@@ -5,21 +5,23 @@ import Counter from "./Counter";
 const PreTurnCounter = (props: {
   seconds: number;
   setGamePhase: Function;
+  
 }) => {
   const { setGamePhase, seconds } = props;
   
-  const [isCountFinished, setIsCountFinished] = useState(false);
+  const [isPreCountFinished, setIsPreCountFinished] = useState(false);
+  
 
   useEffect(() => {
-    if (isCountFinished) {
+    if (isPreCountFinished) {
       setGamePhase("turn");
     }
-  }, [isCountFinished]);
+  }, [isPreCountFinished]);
 
   return (
     <>
       <View>
-        <Counter seconds={seconds} setIsCountFinished={setIsCountFinished} />
+        <Counter seconds={seconds} setIsCountFinished={setIsPreCountFinished} />
       </View>
     </>
   );

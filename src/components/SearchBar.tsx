@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   View,
   TextInput,
@@ -7,12 +8,21 @@ import {
   Text,
 } from "react-native-web";
 
-const SearchBar = (props: { charadeCards: {id: number, category: string, photo: boolean, title: string, age: number}[] }) => {
-  const { charadeCards } = props;
+const SearchBar = (props: { handleAvailableCategories: Function; setSearchTerm: Function; searchTerm: string; }) => {
+  const { handleAvailableCategories, setSearchTerm, searchTerm } = props;
+  
 
   return (
     <View>
-      <TextInput></TextInput>
+      <TextInput
+        placeholder={"Search"}
+        placeholderTextColor={"gray"}
+        value={searchTerm}
+        onChangeText={(newText: string) => {
+          setSearchTerm(newText);
+          handleAvailableCategories(newText);
+        }}
+      ></TextInput>
     </View>
   );
 };
