@@ -9,28 +9,64 @@ const GenericSelector = (props: {
   const { sectionTitle, options, stateFunction, stateVariable } = props;
 
   return (
-    <View style={styles.container}>
-      <Text>{sectionTitle}</Text>
-      {options.map((option) => (
-        <View style={styles.card}>
+    <>
+      <Text style={styles.sectionTitle}>{sectionTitle}</Text>
+      <View style={styles.optionsContainer}>
+        {options.map((option) => (
           <Pressable
             onPress={() => stateFunction(option)}
-            style={stateVariable === option ? styles.optionPressed : {}}
+            // style={stateVariable === option ? <Text style={styles.selectedText}>{option}</Text> : {}}
           >
-            <Text style={styles.text}>{option}</Text>
+            <Text
+              style={
+                stateVariable === option ? styles.selectedOptionText : styles.optionText
+              }
+            >
+              {option}
+            </Text>
           </Pressable>
-        </View>
-      ))}
-    </View>
+        ))}
+      </View>
+    </>
+    
   );
 };
 
 const styles = StyleSheet.create({
-  
-  optionPressed: {
-    backgroundColor: "red",
+  // dropDownContainer: {
+  //  flex: 1,
+  //   marginTop: 5,
+  //   marginBottom: 5,
+  //   backgroundColor: 'green',
+  // },
+
+  optionsContainer: {
+    flexDirection: 'row',
+    justifyContent: "space-around",
+    alignContent: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+    
   },
 
+  optionText: {
+    color: "#a193d9",
+    fontSize: 16,
+  },
+
+  selectedOptionText: {
+    color: "magenta",
+    fontSize: 16,
+  },
+
+  sectionTitle: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontFamily: 'italics',
+    marginBottom: 0,
+    marginTop: 0,
+  },
 });
 
 export default GenericSelector;

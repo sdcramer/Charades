@@ -1,6 +1,6 @@
 import { useState } from "react";
 import GenericBtn from "./components/GenericBtn";
-import { View, Text, StyleSheet } from "react-native-web";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native-web";
 import TeamsAccordion from "./components/TeamsAccordion";
 import RoundsAccordion from "./components/RoundsAccordion";
 import FiltersAccordion from "./components/FiltersAccordion";
@@ -11,7 +11,7 @@ import ScoreBtn from "./components/ScoreBtn";
 import ContinueBtn from "./components/ContinueBtn";
 import EndGameSummary from "./components/LeaderBoard";
 import MissedBtn from "./components/MissedBtn";
-import QuitModal from './components/QuitModal';
+import QuitModal from "./components/QuitModal";
 
 export interface IsCard {
   id: number;
@@ -107,19 +107,130 @@ const App = () => {
   const genericSelectorNames = ["Kids", "Teens", "Adults"];
   const accordionNames: AccordionNames = ["Teams", "Rounds", "Filters"];
 
-  
   const categories: Category[] = [
     {
       id: 1,
-      name: "movies",
+      name: "Movies",
     },
     {
       id: 2,
-      name: "animals",
+      name: "Animals",
     },
     {
       id: 3,
-      name: "food",
+      name: "Food",
+    },
+
+    {
+      id: 4,
+      name: "Sports",
+    },
+
+    {
+      id: 5,
+      name: "Professions",
+    },
+    {
+      id: 6,
+      name: "Superheroes & Villains",
+    },
+
+    {
+      id: 7,
+      name: "Musical Instruments",
+    },
+    {
+      id: 8,
+      name: "Movies",
+    },
+    {
+      id: 9,
+      name: "Animals",
+    },
+    {
+      id: 10,
+      name: "Food",
+    },
+
+    {
+      id: 11,
+      name: "Sports",
+    },
+
+    {
+      id: 12,
+      name: "Professions",
+    },
+    {
+      id: 13,
+      name: "Superheroes & Villains",
+    },
+
+    {
+      id: 14,
+      name: "Musical Instruments",
+    },
+    {
+      id: 15,
+      name: "Movies",
+    },
+    {
+      id: 16,
+      name: "Animals",
+    },
+    {
+      id: 17,
+      name: "Food",
+    },
+
+    {
+      id: 18,
+      name: "Sports",
+    },
+
+    {
+      id: 19,
+      name: "Professions",
+    },
+    {
+      id: 20,
+      name: "Superheroes & Villains",
+    },
+
+    {
+      id: 21,
+      name: "Musical Instruments",
+    },
+    {
+      id: 22,
+      name: "Movies",
+    },
+    {
+      id: 23,
+      name: "Animals",
+    },
+    {
+      id: 24,
+      name: "Food",
+    },
+
+    {
+      id: 25,
+      name: "Sports",
+    },
+
+    {
+      id: 26,
+      name: "Professions",
+    },
+    {
+      id: 27,
+      name: "Superheroes & Villains",
+    },
+
+    {
+      id: 28,
+      name: "Musical Instruments",
     },
   ];
 
@@ -151,30 +262,34 @@ const App = () => {
 
   if (gamePhase === "start") {
     return (
-      <View style={styles.container1}>
-        <Text>Charades</Text>
-        <GenericBtn
-          setStateFunction={setGamePhase}
-          title={genericBtnNames[0]}
-          option={"settings"}
-        />
+      <View style={styles.mainContainer}>
+        <Text style={styles.setTitleTextStyle}>Charades</Text>
+        <View style={styles.startButton}>
+          <GenericBtn
+            setStateFunction={setGamePhase}
+            title={genericBtnNames[0]}
+            option={"settings"}
+          />
+        </View>
       </View>
     );
   } else if (gamePhase === "settings") {
     return (
       <>
-        <View style={styles.container1}>
+        <View style={styles.mainContainer}>
           <TeamsAccordion
             accordionName={accordionNames[0]}
             teamOptions={teamOptions}
             gameState={gameState}
             setGameState={setGameState}
           />
+
           <RoundsAccordion
             accordionName={accordionNames[1]}
             gameState={gameState}
             setGameState={setGameState}
           />
+
           <FiltersAccordion
             accordionName={accordionNames[2]}
             genericInputNames={genericInputNames}
@@ -185,27 +300,28 @@ const App = () => {
             gameState={gameState}
             setGameState={setGameState}
           />
-
-          <GenericBtn
-            setStateFunction={setGamePhase}
-            title={"Back"}
-            option={"start"}
-          />
-          <GenericBtn
-            setStateFunction={setGamePhase}
-            title={"Ready"}
-            option={"preTurn"}
-          />
+          <View style={styles.backButtonContainer}>
+            <GenericBtn
+              setStateFunction={setGamePhase}
+              title={"<"}
+              option={"start"}
+            />
+          </View>
+          <View style={styles.readyButton}>
+            <GenericBtn
+              setStateFunction={setGamePhase}
+              title={"Ready"}
+              option={"preTurn"}
+            />
+          </View>
         </View>
       </>
     );
   } else if (gamePhase === "preTurn") {
     return (
       <>
-        <View>
-          <QuitModal
-            setGamePhase={setGamePhase}
-          />
+        <View style={styles.container}>
+          <QuitModal setGamePhase={setGamePhase} />
           <Text>Round {gameState.currentRound}</Text>
           <Text>Team {gameState.currentTeamsTurn}'s turn</Text>
           <Text>Press Go when ready</Text>
@@ -259,16 +375,81 @@ const App = () => {
   }
 };
 const styles = StyleSheet.create({
-  container1: {
-    backgroundColor: "lightblue",
+  mainContainer: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    flexBasis: "100%",
+    backgroundColor: "#140029",
+    paddingTop: 250,
   },
 
-  container2: {
-    backgroundColor: "orange",
+  settingsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "gray",
+    // marginTop: 50,
+    // marginBottom: 150,
+
+    // textAlign: 'center',
+  },
+
+  setTitleTextStyle: {
+    color: "#a193d9",
+    fontFamily: "HennyPenny-Regular",
+    fontSize: 70,
+    // backgroundColor: 'green',
+    // position: "absolute",
+  },
+
+  startButton: {
+    backgroundColor: "#5E3AC7",
+    width: 100,
+    alignItems: "center",
+    borderRadius: 10,
+    textColor: "white",
+    // marginTop: 140,
+  },
+
+  backButtonContainer: {
+    position: "absolute",
+    top: 5,
+    left: 20,
+  },
+
+  readyButton: {
+    backgroundColor: "#5E3AC7",
+    width: 100,
+    alignItems: "center",
+    borderRadius: 10,
+    textColor: "white",
+    // position: "absolute",
+    // bottom: 90,
   },
 });
 
 export default App;
+
+//   roundsButton: {
+//     backgroundColor: "#5E3AC7",
+//     borderRadius: 10,
+//     width: "30%",
+//     alignItems: "center",
+//   },
+
+//   filtersButton: {
+//     backgroundColor: "#5E3AC7",
+//     borderRadius: 10,
+//     width: "30%",
+//     alignItems: "center",
+//   },
+
+//   container2: {
+//     position: "absolute",
+//     top: -360,
+//     left: 25,
+//   },
+
+//   backbutton: {
+//     backgroundColor: "#5E3AC7",
+//   },

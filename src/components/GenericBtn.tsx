@@ -11,25 +11,23 @@ const GenericBtn = (props: {
   const { setStateFunction, title, option } = props;
 
   return (
-    <View style={styles.button}>
+    <View>
       <TouchableOpacity onPress={() => setStateFunction(option)}>
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.textColor, styles.textSize]}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "#2277ee",
-    width: "20%",
-    alignItems: "center",
-  },
+ const styles = StyleSheet.create({
+   textColor: {
+     color: "white",
+   },
 
-  text: {
-    color: "white",
-    fontSize: 35,
-  },
-});
+   textSize: {
+     fontSize: 30,
+   },
+  
+ });
 
 export default GenericBtn;

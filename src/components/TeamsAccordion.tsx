@@ -39,29 +39,25 @@ const TeamsAccordion = (props: {
 
   return (
     <Accordion accordionName={accordionName}>
-      <GenericSelector
+      <GenericSelector 
         options={teamOptions}
         stateFunction={setNumOfTeams}
         stateVariable={numOfTeams}
       ></GenericSelector>
     </Accordion>
   );
+  const styles = StyleSheet.create({
+    button: {
+      backgroundColor: "#5E3AC7",
+      width: "30%",
+      alignItems: "center",
+      borderRadius: 10,
+      position: "absolute",
+      top: 365,
+    },
+  });
+
 };
 
-const styles = StyleSheet.create({
-  container1: {
-    backgroundColor: "red",
-    width: "30%",
-  },
-
-  container2: {
-    backgroundColor: "yellow",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  container3: {},
-});
 
 export default TeamsAccordion;

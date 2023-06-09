@@ -39,8 +39,8 @@ const FiltersAccordion = (props: {
   >([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
-  const [minYear, setMinYear] = useState(0);
-  const [maxYear, setMaxYear] = useState(0);
+  const [minYear, setMinYear] = useState();
+  const [maxYear, setMaxYear] = useState();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -77,7 +77,10 @@ const FiltersAccordion = (props: {
     setGameState(newGameState);
   }, [selectedCategories]);
 
-  console.log('after useEffects on FiltersAccordion run, gameState =', gameState)
+  console.log(
+    "after useEffects on FiltersAccordion run, gameState =",
+    gameState
+  );
 
   const categoryHandler = (itemName: string) => {
     let chosenCategories = selectedCategories;
@@ -101,7 +104,26 @@ const FiltersAccordion = (props: {
     setFilteredSearchCategories(filteredSearch);
   };
 
+  const renderItem = ({ item }) => (
+    <Pressable
+      style={styles.filteredCategorieContainer}
+      onPress={() => categoryHandler(item.name)}
+    >
+      <Text
+        style={
+          selectedCategories.includes(item.name)
+            ? styles.categoryTextHighlight
+            : styles.categoryTextDefaultColor
+        }
+      >
+        {item.name}
+      </Text>
+    </Pressable>
+  );
+
   return (
+    <View style={styles.filterContainer}>
+
     <Accordion accordionName={accordionName}>
       <GenericSelector
         options={genericSelectorNames}
@@ -116,67 +138,104 @@ const FiltersAccordion = (props: {
         minYear={minYear}
         maxYear={maxYear}
       ></GenericInput>
-
-      <Text>{"Photos Only"}</Text>
-      <Switch
-        value={isPhotoMode}
-        onValueChange={() => setIsPhotoMode(!isPhotoMode)}
-      ></Switch>
-      <Text>{"Categories"}</Text>
+      <View style={styles.photoModeContainer}>
+        <Text style={styles.textPhotosOnly}>{"Photos Only"}</Text>
+        <Switch
+          style={styles.switch}
+          value={isPhotoMode}
+          onValueChange={() => setIsPhotoMode(!isPhotoMode)}
+          thumbColor={"#a193d9"}
+          activeThumbColor={"magenta"}
+          trackColor={{ false: "#a193d950", true: "#a193d9" }}
+        />
+      </View>
+      <Text style={styles.sectionTitle}>{"Categories"}</Text>
       <SearchBar
         handleAvailableCategories={handleAvailableCategories}
         setSearchTerm={setSearchTerm}
         searchTerm={searchTerm}
       />
-
-      <FlatList
-        data={filteredSearchCategories}
-        keyExtractor={(item: Category) => item.id}
-        renderItem={({ item }: { item: Category }) => (
-          <Pressable onPress={() => categoryHandler(item.name)}>
-            <Text
-              style={
-                selectedCategories.includes(item.name)
-                  ? styles.categoryHighlight
-                  : {}
-              }
-            >
-              {item.name}
-            </Text>
-          </Pressable>
-        )}
-      />
-      <Pressable
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? "rgb(210, 230, 255)" : "white",
-          },
-        ]}
-      >
-        <Text>{}</Text>
-      </Pressable>
+      <View style={styles.flatListContainer}>
+        <FlatList
+          style={styles.flatList}
+          data={filteredSearchCategories}
+          keyExtractor={(item: Category) => item.id}
+          renderItem={renderItem}
+        />
+      </View>
+      {/* <Pressable
+          style={({ pressed }) => [
+            {
+              color: pressed ? "magenta" : "white",
+            },
+          ]}
+        >
+          <Text>{}</Text>
+        </Pressable> */}
     </Accordion>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  categoryHighlight: {
-    backgroundColor: "red",
+  filterContainer: {
+    flex: 1, 
   },
 
-  categorySelected: {
-    backgroundColor: "red",
-    width: "30%",
+  photoModeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginTop: 40,
+    marginBottom: 30,
   },
 
-  container2: {
-    backgroundColor: "yellow",
-    width: "100%",
-    alignItems: "center",
+  switchThumbColorDisabled: {
+    thumbColor: "#a193d9",
+  },
+
+  switchThumbColorEnabled: {
+    thumbColor: "magenta",
+  },
+
+  textPhotosOnly: {
+    color: "#a193d9",
+    fontSize: 14,
+    marginLeft: -25,
+  },
+
+  switch: {
     justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: 'red',
+    marginRight: -15,
   },
 
-  container3: {},
+  flatListContainer: {
+    // flex: 1,
+    marginLeft: 8,
+  },
+
+  sectionTitle: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontFamily: "italics",
+  },
+
+  categoryTextHighlight: {
+    color: "magenta",
+  },
+
+  categoryTextDefaultColor: {
+    color: "#a193d9",
+  },
+
+  flatList: {
+    // flex: 1, 
+    // marginTop: 5,
+    // marginLeft: 8,
+    // marginBottom: 5,
+  },
 });
 
 export default FiltersAccordion;
