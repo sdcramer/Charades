@@ -15,6 +15,7 @@ const LeaderBoard = (props: { gameState: GameState }) => {
   const createRank: any = (r: any, i: any) => {
     const place = positions[i];
     const msg = i === 0 ? `Team ${r} Wins!` : "";
+    
     return (
       <>
         <RankRow

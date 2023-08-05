@@ -1,46 +1,44 @@
 import { useState, useEffect } from "react";
+import { IsCard, Category, GameState } from "../App";
 import {
   View,
   Text,
   Switch,
-  StyleSheet,
-  TextInput,
   FlatList,
-  TouchableOpacity,
   Pressable,
+  TouchableOpacity,
+  StyleSheet,
 } from "react-native-web";
-import Accordion from "./Accordion";
-import GenericInput from "./GenericInput";
-import SearchBar from "./SearchBar";
-import GenericSelector from "./GenericSelector";
-import { IsCard, Category, GameState } from "../App";
+import GenericSelector from "../components/GenericSelector";
+import GenericInput from "../components/GenericInput";
+import SearchBar from "../components/SearchBar";
+import SettingsModal from "../components/SettingsModal";
 
-const FiltersAccordion = (props: {
-  accordionName: string;
+const FiltersModal = (props: {
+  settingsBtnName: string;
   genericInputNames: string[];
   genericSelectorNames: string[];
   charadeCards: IsCard[];
-  option: string;
   gameState: GameState;
   setGameState: Function;
   categories: Category[];
 }) => {
   const {
-    accordionName,
+    settingsBtnName,
     genericSelectorNames,
-    option,
     categories,
     gameState,
     setGameState,
   } = props;
+
   const [isPhotoMode, setIsPhotoMode] = useState(false);
   const [filteredSearchCategories, setFilteredSearchCategories] = useState<
     Category[]
   >([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
-  const [minYear, setMinYear] = useState<number>(0);
-  const [maxYear, setMaxYear] = useState<number>(0);
+  const [minYear, setMinYear] = useState<number>();
+  const [maxYear, setMaxYear] = useState<number>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -74,13 +72,7 @@ const FiltersAccordion = (props: {
   useEffect(() => {
     const newGameState = structuredClone(gameState);
     newGameState.categories = selectedCategories;
-    setGameState(newGameState);
   }, [selectedCategories]);
-
-  console.log(
-    "after useEffects on FiltersAccordion run, gameState =",
-    gameState
-  );
 
   const categoryHandler = (itemName: string) => {
     let chosenCategories = selectedCategories;
@@ -88,15 +80,19 @@ const FiltersAccordion = (props: {
       const filteredCategories = selectedCategories.filter(
         (categoryName) => categoryName !== itemName
       );
+      console.log("filteredCategories =", filteredCategories);
       setSelectedCategories(filteredCategories);
     } else {
       chosenCategories = [...selectedCategories, itemName];
       setSelectedCategories(chosenCategories);
+      console.log("selectedCategories =", selectedCategories);
       setSearchTerm("");
       setFilteredSearchCategories(categories);
     }
+    console.log("selectedCategories at end of function", selectedCategories);
   };
 
+  console.log("selectedCategories after function =", selectedCategories);
   const handleAvailableCategories = (str: string) => {
     const filteredSearch = categories.filter((category) =>
       category.name.startsWith(str)
@@ -104,7 +100,7 @@ const FiltersAccordion = (props: {
     setFilteredSearchCategories(filteredSearch);
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: any) => (
     <Pressable
       style={styles.filteredCategorieContainer}
       onPress={() => categoryHandler(item.name)}
@@ -122,40 +118,55 @@ const FiltersAccordion = (props: {
   );
 
   return (
-    <View style={styles.filterContainer}>
-
-    <Accordion accordionName={accordionName}>
+    <SettingsModal
+      settingsBtnName={settingsBtnName}
+      modalWrapper={styles.modalWrapper}
+      modalContainer={styles.modalContainer}
+      // setStateFunction={setGamePhase}
+    >
       <GenericSelector
         options={genericSelectorNames}
         sectionTitle={"Age"}
         stateFunction={setAgeGroup}
         stateVariable={ageGroup}
+        optionSelected={styles.optionSelected}
+        optionNotSelected={styles.optionNotSelected}
+        sectionTitleTextStyle={styles.sectionTitleText}
       ></GenericSelector>
       <GenericInput
-        sectionTitle={option}
+        sectionTitle={"Year"}
         setMinYear={setMinYear}
         setMaxYear={setMaxYear}
         minYear={minYear}
         maxYear={maxYear}
       ></GenericInput>
-      <View style={styles.photoModeContainer}>
-        <Text style={styles.textPhotosOnly}>{"Photos Only"}</Text>
-        <Switch
-          style={styles.switch}
-          value={isPhotoMode}
-          onValueChange={() => setIsPhotoMode(!isPhotoMode)}
-          thumbColor={"#a193d9"}
-          activeThumbColor={"magenta"}
-          trackColor={{ false: "#a193d950", true: "#a193d9" }}
-        />
+
+      <View style={styles.photoModeSectionWrapper}>
+        <Text style={styles.sectionTitle}>{"Photo Mode"}</Text>
+        <View style={styles.photoModeContainer}>
+          <Text style={styles.textPhotosOnly}>{"Photos Only"}</Text>
+          <Switch
+            style={styles.switch}
+            value={isPhotoMode}
+            onValueChange={() => setIsPhotoMode(!isPhotoMode)}
+            thumbColor={"#a193d9"}
+            activeThumbColor={"magenta"}
+            trackColor={{ false: "#a193d950", true: "#a193d9" }}
+          />
+        </View>
       </View>
-      <Text style={styles.sectionTitle}>{"Categories"}</Text>
-      <SearchBar
-        handleAvailableCategories={handleAvailableCategories}
-        setSearchTerm={setSearchTerm}
-        searchTerm={searchTerm}
-      />
-      <View style={styles.flatListContainer}>
+      <View style={styles.categoriesContainer}>
+        <Text style={styles.sectionTitle}>{"Categories"}</Text>
+
+        <View style={styles.searchBarContainer}>
+          <SearchBar
+            handleAvailableCategories={handleAvailableCategories}
+            setSearchTerm={setSearchTerm}
+            searchTerm={searchTerm}
+          />
+        </View>
+      </View>
+      <View style={styles.flatlistContainer}>
         <FlatList
           style={styles.flatList}
           data={filteredSearchCategories}
@@ -163,30 +174,65 @@ const FiltersAccordion = (props: {
           renderItem={renderItem}
         />
       </View>
+
       {/* <Pressable
-          style={({ pressed }) => [
-            {
-              color: pressed ? "magenta" : "white",
-            },
-          ]}
-        >
-          <Text>{}</Text>
-        </Pressable> */}
-    </Accordion>
-    </View>
+            style={({ pressed }) => [
+              {
+                color: pressed ? "magenta" : "white",
+              },
+            ]}
+          >
+            <Text>{}</Text>
+          </Pressable> */}
+    </SettingsModal>
   );
 };
 
+export default FiltersModal;
+
 const styles = StyleSheet.create({
-  // filterContainer: {
-  //   flex: 1, 
-  // },
+  modalWrapper: {
+    flex: 1,
+    backgroundColor: "#140029",
+    padding: 40,
+  },
+
+  modalContainer: {
+    flex: 1,
+    border: ".25rem solid #a193d945",
+    borderRadius: 25,
+  },
+
+  sectionTitleText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 25,
+    fontFamily: "HennyPenny-Regular",
+    paddingTop: 10,
+  },
+
+  optionNotSelected: {
+    color: "#a193d9",
+    fontSize: 20,
+  },
+
+  optionSelected: {
+    color: "magenta",
+    fontSize: 20,
+  },
+
+  photoModeSectionWrapper: {
+    flex: 1,
+    justifyContent: "space-evenly",
+    textAlign: "center",
+    // backgroundColor: 'pink',
+  },
 
   photoModeContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginTop: 40,
-    marginBottom: 30,
+    justifyContent: "space-between",
+    paddingLeft: 9,
+    paddingRight: 32,
   },
 
   switchThumbColorDisabled: {
@@ -199,27 +245,26 @@ const styles = StyleSheet.create({
 
   textPhotosOnly: {
     color: "#a193d9",
-    fontSize: 14,
-    marginLeft: -25,
+    fontSize: 20,
   },
 
   switch: {
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: 'red',
-    marginRight: -15,
+    fontSize: 50,
+    transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }],
   },
 
-  flatListContainer: {
-    // flex: 1,
-    marginLeft: 8,
+  categoriesContainer: {
+    flex: 1,
+    justifyContent: "space-evenly",
   },
 
-  sectionTitle: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 14,
-    fontFamily: "italics",
+  flatlistContainer: {
+    flex: 1,
+    marginTop: -15,
+    marginBottom: 2,
+    borderRaidus: 25,
   },
 
   categoryTextHighlight: {
@@ -230,12 +275,18 @@ const styles = StyleSheet.create({
     color: "#a193d9",
   },
 
+  searchBarContainer: {
+    justifyContent: "center",
+    padding: 6,
+  },
+
   flatList: {
-    // flex: 1, 
-    // marginTop: 5,
-    // marginLeft: 8,
-    // marginBottom: 5,
+    flex: 1,
+    paddingLeft: 6,
+    paddingTop: 2,
+    backgroundColor: '#a193d925',
+    borderRadius: 8,
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
-
-export default FiltersAccordion;

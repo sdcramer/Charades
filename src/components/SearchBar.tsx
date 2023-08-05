@@ -20,6 +20,8 @@ const SearchBar = (props: { handleAvailableCategories: Function; setSearchTerm: 
         placeholder={"Search"}
         placeholderTextColor={"#a193d9"}
         value={searchTerm}
+        maxLength={4}
+        textAlign={'center'}
         onChangeText={(newText: string) => {
           setSearchTerm(newText);
           handleAvailableCategories(newText);
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
 
   searchbarInput: {
     fontSize: 14,
-    flex: 1,
     color: "magenta",
     marginLeft: 4,
   },

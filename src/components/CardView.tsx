@@ -3,9 +3,9 @@ import Placeholder from "./assets/placeholder.png";
 
 const CardView = () => {
   return (
-    <View>
+    <>
       <Image source={Placeholder}></Image>
-    </View>
+    </>
   );
 };
 

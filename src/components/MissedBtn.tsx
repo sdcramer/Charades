@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native-web";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native-web";
 import { GameState } from "../App";
 
-const MissedBtn = (props: {
-  gameState: GameState;
-  setGameState: Function;
-  
-}) => {
+const MissedBtn = (props: { gameState: GameState; setGameState: Function }) => {
   const { gameState, setGameState } = props;
 
   const MissedBtnHandler = () => {
@@ -18,12 +14,27 @@ const MissedBtn = (props: {
   };
 
   return (
-    <View>
       <TouchableOpacity onPress={MissedBtnHandler}>
-        <Text>X</Text>
-      </TouchableOpacity>
+    <View style={styles.missedBtn}>
+        <Text style={styles.missedBtnText}>X</Text>
     </View>
+      </TouchableOpacity>
   );
 };
 
 export default MissedBtn;
+
+const styles = StyleSheet.create({
+  missedBtn: {
+    backgroundColor: "#5E3AC7",
+    alignItems: "center",
+    borderRadius: 10,
+    width: 100,
+  },
+
+  missedBtnText: {
+    color: "magenta",
+    fontWeight: 'bold',
+    fontSize: 35,
+  },
+});

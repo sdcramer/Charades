@@ -9,7 +9,7 @@ const Accordion = (props: {
   const [showContent, setShowContent] = useState(false);
 
   return (
-    <View>
+    <View style={styles.accordianContainer}>
       <TouchableOpacity onPress={() => setShowContent(!showContent)}>
         <View style={styles.textContainer}>
           <Text style={styles.textStyle}>{accordionName}</Text>
@@ -25,21 +25,19 @@ const Accordion = (props: {
 const styles = StyleSheet.create({
   // accordianContainer: {
   //   backgroundColor: 'red',
-  //   justifyContent: 'center',
-  //   // flex: 1,
-  //   // justifyContent: 'center',
-  //   // alignContent: 'center',
+  //   flex: 1,
   // },
 
-  textContainer: {
-    border: 'solid magenta',
-  },
+  // textContainer: {
+  //   border: 'solid magenta',
+  // },
 
 
   dropDownContainer: {
     border: "solid #a193d945",
     borderRadius: 8,
-    flex: 1,
+    // flex: 1,
+    marginBottom: 80,
   },
 
   textStyle: {
@@ -49,8 +47,7 @@ const styles = StyleSheet.create({
     width: 180,
     textAlign: "center",
     borderRadius: 10,
-    marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 10,
   },
 });
 

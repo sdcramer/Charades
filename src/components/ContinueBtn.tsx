@@ -48,6 +48,7 @@ const ContinueBtn = (props: {
     });
 
     const rank = teamsArr.map((team) => team[0]);
+    
 
     newGameState.rank = rank;
     setGameState(newGameState);

@@ -5,12 +5,25 @@ const GenericSelector = (props: {
   options: string[] | number[];
   stateFunction: Function;
   stateVariable: string | number;
+  optionSelected: Object;
+  optionNotSelected: Object;
+  sectionTitleTextStyle: Object;
 }) => {
-  const { sectionTitle, options, stateFunction, stateVariable } = props;
+  const {
+    sectionTitle,
+    options,
+    stateFunction,
+    stateVariable,
+    optionSelected,
+    optionNotSelected,
+    sectionTitleTextStyle,
+  } = props;
 
   return (
-    <>
-      <Text style={styles.sectionTitle}>{sectionTitle}</Text>
+    <Pressable style={styles.pressableWrapper}>
+      <View style={styles.sectionTitleContainer}>
+        <Text style={sectionTitleTextStyle}>{sectionTitle}</Text>
+      </View>
       <View style={styles.optionsContainer}>
         {options.map((option) => (
           <Pressable
@@ -19,7 +32,7 @@ const GenericSelector = (props: {
           >
             <Text
               style={
-                stateVariable === option ? styles.selectedOptionText : styles.optionText
+                stateVariable === option ? optionSelected : optionNotSelected
               }
             >
               {option}
@@ -27,45 +40,26 @@ const GenericSelector = (props: {
           </Pressable>
         ))}
       </View>
-    </>
-    
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  // dropDownContainer: {
-  //  flex: 1,
-  //   marginTop: 5,
-  //   marginBottom: 5,
-  //   backgroundColor: 'green',
-  // },
+  pressableWrapper: {
+    flex: 1,
+    // backgroundColor: "pink",
+    width: '100%',
+    justifyContent: 'center',
+  },
+
+  sectionTitleContainer: {
+    // backgroundColor: 'red',
+  },
 
   optionsContainer: {
-    flexDirection: 'row',
-    justifyContent: "space-around",
-    alignContent: 'center',
-    marginTop: 5,
-    marginBottom: 5,
-    
-  },
-
-  optionText: {
-    color: "#a193d9",
-    fontSize: 16,
-  },
-
-  selectedOptionText: {
-    color: "magenta",
-    fontSize: 16,
-  },
-
-  sectionTitle: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 14,
-    fontFamily: 'italics',
-    marginBottom: 0,
-    marginTop: 0,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: '100%',
   },
 });
 

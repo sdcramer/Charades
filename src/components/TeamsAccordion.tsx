@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native-web";
+import { StyleSheet } from "react-native-web";
 import GenericSelector from "./GenericSelector";
 import Accordion from "./Accordion";
 import { GameState, Team } from "../App";
@@ -28,12 +28,6 @@ const TeamsAccordion = (props: {
     newGameState.numOfTeams = numOfTeams;
     setGameState(newGameState);
   }, [numOfTeams]);
-
-  // useEffect(() => {
-  //   const newGameState = structuredClone(gameState);
-  //   newGameState.numOfTeams = numOfTeams;
-  //   setGameState(newGameState);
-  // }, [numOfTeams]);
 
   console.log("after useEffect on TeamsAccordion run, gameState =", gameState);
 
