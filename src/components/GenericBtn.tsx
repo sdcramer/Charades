@@ -10,37 +10,34 @@ const GenericBtn = (props: {
   setStateFunction: Function;
   title: string;
   option: string | boolean;
-
 }) => {
   const { setStateFunction, title, option } = props;
 
   return (
-      <TouchableOpacity onPress={() => {
-        setStateFunction(option) 
-      }}>
-    <View style={styles.genericBtn}>
-        <Text style={[styles.textColor, styles.textSize]}>{title}</Text>
-    </View>
-      </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.genericBtnContainer}
+      onPress={() => {
+        setStateFunction(option);
+      }}
+    >
+      <Text style={styles.genericBtnText}>{title}</Text>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  textColor: {
-    color: "white",
-  },
-
-  textSize: {
-    fontSize: 18,
-  },
-
-  genericBtn: {
+  genericBtnContainer: {
     backgroundColor: "#5E3AC7",
-    width: 90,
-    height: 25,
+    height: '100%',
+    width: 100,
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     borderRadius: 10,
+  },
+
+  genericBtnText: {
+    fontSize: 18,
+    color: "white",
   },
 });
 

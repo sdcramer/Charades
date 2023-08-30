@@ -131,8 +131,11 @@ const FiltersModal = (props: {
         stateVariable={ageGroup}
         optionSelected={styles.optionSelected}
         optionNotSelected={styles.optionNotSelected}
+        pressableWrapperStyle={styles.pressableWrapper}
+        sectionTitleStyle={styles.sectionTitle}
         sectionTitleTextStyle={styles.sectionTitleText}
       ></GenericSelector>
+      <View style={styles.emptyViewContainer}></View>
       <GenericInput
         sectionTitle={"Year"}
         setMinYear={setMinYear}
@@ -140,38 +143,49 @@ const FiltersModal = (props: {
         minYear={minYear}
         maxYear={maxYear}
       ></GenericInput>
-
+      <View style={styles.emptyViewContainer}></View>
       <View style={styles.photoModeSectionWrapper}>
-        <Text style={styles.sectionTitle}>{"Photo Mode"}</Text>
-        <View style={styles.photoModeContainer}>
-          <Text style={styles.textPhotosOnly}>{"Photos Only"}</Text>
-          <Switch
-            style={styles.switch}
-            value={isPhotoMode}
-            onValueChange={() => setIsPhotoMode(!isPhotoMode)}
-            thumbColor={"#a193d9"}
-            activeThumbColor={"magenta"}
-            trackColor={{ false: "#a193d950", true: "#a193d9" }}
-          />
+        <View style={styles.photoModeSectionContainer}>
+          <View style={styles.photoModeContainer}>
+            <Text style={styles.photoModeText}>{"Photo Mode"}</Text>
+          </View>
+          <View style={styles.photosOnlySectionContainer}>
+            <Text style={styles.textPhotosOnly}>{"Photos Only"}</Text>
+            <Switch
+              style={styles.switch}
+              value={isPhotoMode}
+              onValueChange={() => setIsPhotoMode(!isPhotoMode)}
+              thumbColor={"#a193d9"}
+              activeThumbColor={"magenta"}
+              trackColor={{ false: "#a193d950", true: "#a193d9" }}
+            />
+          </View>
         </View>
       </View>
-      <View style={styles.categoriesContainer}>
-        <Text style={styles.sectionTitle}>{"Categories"}</Text>
+      <View style={styles.emptyViewContainer}></View>
+      <View style={styles.categoriesWrapper}>
+        <View style={styles.categoriesContainer}>
+          <View style={styles.categories}>
+            <Text style={styles.categoriesText}>{"Categories"}</Text>
+          </View>
 
-        <View style={styles.searchBarContainer}>
-          <SearchBar
-            handleAvailableCategories={handleAvailableCategories}
-            setSearchTerm={setSearchTerm}
-            searchTerm={searchTerm}
-          />
+          <View style={styles.searchBarContainer}>
+            <SearchBar
+              handleAvailableCategories={handleAvailableCategories}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+            />
+          </View>
         </View>
       </View>
+
       <View style={styles.flatlistContainer}>
         <FlatList
           style={styles.flatList}
           data={filteredSearchCategories}
           keyExtractor={(item: Category) => item.id}
           renderItem={renderItem}
+          contentContainerStyle={styles.contentContainer}
         />
       </View>
 
@@ -194,45 +208,90 @@ const styles = StyleSheet.create({
   modalWrapper: {
     flex: 1,
     backgroundColor: "#140029",
-    padding: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   modalContainer: {
-    flex: 1,
+    flex: 0.8,
+    width: 250,
     border: ".25rem solid #a193d945",
     borderRadius: 25,
   },
 
+  pressableWrapper: {
+    // backgroundColor: "orange",
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  sectionTitle: {
+    // backgroundColor: "blue",
+    flex: 0.6,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
   sectionTitleText: {
     color: "white",
-    textAlign: "center",
-    fontSize: 25,
+    // textAlign: "center",
+    fontSize: 16,
     fontFamily: "HennyPenny-Regular",
-    paddingTop: 10,
+  },
+
+  emptyViewContainer: {
+    // backgroundColor: 'red',
+    flex: 0.1,
   },
 
   optionNotSelected: {
     color: "#a193d9",
-    fontSize: 20,
+    fontSize: 14,
   },
 
   optionSelected: {
     color: "magenta",
-    fontSize: 20,
+    fontSize: 14,
   },
 
   photoModeSectionWrapper: {
     flex: 1,
     justifyContent: "space-evenly",
     textAlign: "center",
-    // backgroundColor: 'pink',
+    // backgroundColor: "orange",
+  },
+
+  photoModeSectionContainer: {
+    // backgroundColor: "blue",
+    flex: 0.6,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 
   photoModeContainer: {
+    // backgroundColor: 'red',
+    height: "35%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  photosOnlySectionContainer: {
+    // backgroundColor: 'pink',
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 9,
-    paddingRight: 32,
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "100%",
+    height: "45%",
+  },
+
+  photoModeText: {
+    color: "white",
+    fontFamily: "HennyPenny-Regular",
+    fontSize: 16,
   },
 
   switchThumbColorDisabled: {
@@ -245,26 +304,59 @@ const styles = StyleSheet.create({
 
   textPhotosOnly: {
     color: "#a193d9",
-    fontSize: 20,
+    fontSize: 14,
   },
 
   switch: {
     justifyContent: "center",
     alignItems: "center",
-    fontSize: 50,
-    transform: [{ scaleX: 1.1 }, { scaleY: 1.1 }],
+    transform: [{ scaleX: 1.0 }, { scaleY: 1.1 }],
+  },
+
+  categoriesWrapper: {
+    // backgroundColor: "orange",
+    flex: 0.6,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   categoriesContainer: {
+    // backgroundColor: "blue",
     flex: 1,
-    justifyContent: "space-evenly",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  categories: {
+    // backgroundColor: "#a193d925",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    height: "55%",
+    width: "100%",
+  },
+
+  categoriesText: {
+    color: "white",
+    fontSize: 16,
+    fontFamily: "HennyPenny-Regular",
+  },
+
+  searchBarContainer: {
+    // backgroundColor: "pink",
+    flexDirection: "flex-end",
+    justifyContent: "center",
+    height: "40%",
+    width: "99%",
   },
 
   flatlistContainer: {
     flex: 1,
-    marginTop: -15,
+    alignItems: "center",
+    marginLeft: 3,
+    marginRight: 3,
+    marginTop: 3,
     marginBottom: 2,
-    borderRaidus: 25,
   },
 
   categoryTextHighlight: {
@@ -275,18 +367,18 @@ const styles = StyleSheet.create({
     color: "#a193d9",
   },
 
-  searchBarContainer: {
-    justifyContent: "center",
-    padding: 6,
-  },
-
   flatList: {
     flex: 1,
     paddingLeft: 6,
     paddingTop: 2,
-    backgroundColor: '#a193d925',
-    borderRadius: 8,
-    marginLeft: 10,
-    marginRight: 10,
+    backgroundColor: "#a193d925",
+    width: "100%",
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
+    borderBottomLeftRadius: 13,
+    borderBottomRightRadius: 13,
+
+    // marginLeft: 10,
+    // marginRight: 10,
   },
 });

@@ -1,14 +1,32 @@
-import { View, Modal, Text, StyleSheet, Pressable } from "react-native-web";
-import { useState } from "react";
+import {
+  View,
+  Modal,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native-web";
+import { useState, useEffect } from "react";
 import GenericBtn from "./GenericBtn";
 
-const QuitModal = (props: { setGamePhase: Function; isModalVisible: boolean; setIsModalVisible: Function;  }) => {
-  const { setGamePhase, isModalVisible, setIsModalVisible } = props;
+const QuitModal = (props: { setGamePhase: Function; gamePhase: string }) => {
+  const { setGamePhase, gamePhase } = props;
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
+  useEffect(() => {
+    if (gamePhase === "start") {
+      setIsModalVisible(false);
+    }
+  }, [gamePhase]);
 
+  console.log("isModalVisible =", isModalVisible);
 
   return (
     <>
+      <GenericBtn
+        setStateFunction={setIsModalVisible}
+        option={!isModalVisible}
+        title={"Quit"}
+      ></GenericBtn>
       <Modal
         animationType={"fade"}
         visible={isModalVisible}
@@ -17,23 +35,25 @@ const QuitModal = (props: { setGamePhase: Function; isModalVisible: boolean; set
       >
         <View style={styles.quitModalWrapper}>
           <View style={styles.quitTextWrapper}>
-            <View style={styles.quitTextContainer}>
-              <Text style={styles.quitText}>Quit game?</Text>
-            </View>
-            <View style={styles.noYesBtnContainer}>
-              <View style={styles.noBtn}>
-                <GenericBtn
-                  setStateFunction={setIsModalVisible}
-                  title={"No"}
-                  option={false}
-                ></GenericBtn>
+            <View style={styles.quitTextCard}>
+              <View style={styles.quitTextContainer}>
+                <Text style={styles.quitText}>Quit game?</Text>
               </View>
-              <View style={styles.yesBtn}>
-                <GenericBtn
-                  setStateFunction={setGamePhase}
-                  title={"Yes"}
-                  option={"start"}
-                ></GenericBtn>
+              <View style={styles.noYesBtnContainer}>
+                <View style={styles.noBtn}>
+                  <GenericBtn
+                    setStateFunction={setIsModalVisible}
+                    title={"No"}
+                    option={false}
+                  ></GenericBtn>
+                </View>
+                <View style={styles.yesBtn}>
+                  <GenericBtn
+                    setStateFunction={setGamePhase}
+                    title={"Yes"}
+                    option={"start"}
+                  ></GenericBtn>
+                </View>
               </View>
             </View>
           </View>
@@ -47,23 +67,35 @@ const styles = StyleSheet.create({
   quitModalWrapper: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#140029",
-    padding: 40,
   },
 
   quitTextWrapper: {
+    // backgroundColor: "blue",
+    flex: 0.35,
+    width: 300,
     alignItems: "center",
     alignContent: "space-evenly",
     justifyContent: "center",
-    border: "solid #a193d945",
+    border: ".25rem solid #a193d945",
     borderRadius: 25,
-    padding: 40,
+  },
+
+  quitTextCard: {
+    flex: .7,
+    // backgroundColor: 'yellow',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 
   quitTextContainer: {
+    flex: 0.4,
     width: "100%",
+    // backgroundColor: "green",
     alignItems: "center",
-    paddingBottom: 20,
+    justifyContent: 'center',
   },
 
   quitText: {
@@ -73,14 +105,16 @@ const styles = StyleSheet.create({
   },
 
   noYesBtnContainer: {
+    // backgroundColor: "pink",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     width: "100%",
-    padding: 10,
+    height: "23%",
   },
 
   noBtn: {
     backgroundColor: "#5E3AC7",
+    height: "100%",
     width: 80,
     alignItems: "center",
     borderRadius: 10,

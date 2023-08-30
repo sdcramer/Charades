@@ -9,9 +9,12 @@ import {
   StyleSheet,
 } from "react-native-web";
 
-const SearchBar = (props: { handleAvailableCategories: Function; setSearchTerm: Function; searchTerm: string; }) => {
+const SearchBar = (props: {
+  handleAvailableCategories: Function;
+  setSearchTerm: Function;
+  searchTerm: string;
+}) => {
   const { handleAvailableCategories, setSearchTerm, searchTerm } = props;
-  
 
   return (
     <View style={styles.searchbarContainer}>
@@ -21,7 +24,7 @@ const SearchBar = (props: { handleAvailableCategories: Function; setSearchTerm: 
         placeholderTextColor={"#a193d9"}
         value={searchTerm}
         maxLength={4}
-        textAlign={'center'}
+        textAlign={"center"}
         onChangeText={(newText: string) => {
           setSearchTerm(newText);
           handleAvailableCategories(newText);
@@ -35,20 +38,19 @@ const styles = StyleSheet.create({
   searchbarContainer: {
     border: "solid #a193d945",
     borderRadius: 8,
-    height: 24,
-    marginTop: 2,
-    marginRight: 3,
-    marginLeft: 3,
-    marginBottom: 4,
+    height: 26,
+    justifyContent: "center",
+    // marginTop: 2,
+    // marginRight: 3,
+    // marginLeft: 3,
+    // marginBottom: 4,
   },
 
   searchbarInput: {
-    fontSize: 14,
+    fontSize: 12,
     color: "magenta",
-    marginLeft: 4,
+    paddingLeft: 6,
   },
-}); 
-
-
+});
 
 export default SearchBar;

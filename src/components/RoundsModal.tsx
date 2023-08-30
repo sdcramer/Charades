@@ -11,7 +11,7 @@ const RoundsModal = (props: {
   const { settingsBtnName, gameState, setGameState } = props;
 
   const [numOfRounds, setNumOfRounds] = useState<3 | 5 | 7>(3);
-  const [numOfRoundTime, setNumOfRoundTime] = useState<30 | 60 | 90>(30);
+  const [numOfRoundTime, setNumOfRoundTime] = useState< 2 | 30 | 60 | 90>(2);
   const roundTimes = ["30", "60", "90"];
   const roundOptions = ["3", "5", "7"];
 
@@ -42,8 +42,11 @@ const RoundsModal = (props: {
         sectionTitle={"Rounds"}
         optionSelected={styles.optionSelected}
         optionNotSelected={styles.optionNotSelected}
+        pressableWrapperStyle={styles.pressableWrapper}
+        sectionTitleStyle={styles.sectionTitle}
         sectionTitleTextStyle={styles.sectionTitleText}
       ></GenericSelector>
+
       <GenericSelector
         options={roundTimes}
         stateVariable={numOfRoundTime}
@@ -51,6 +54,8 @@ const RoundsModal = (props: {
         sectionTitle={"Round Time"}
         optionSelected={styles.optionSelected}
         optionNotSelected={styles.optionNotSelected}
+        pressableWrapperStyle={styles.pressableWrapper}
+        sectionTitleStyle={styles.sectionTitle}
         sectionTitleTextStyle={styles.sectionTitleText}
       ></GenericSelector>
     </SettingsModal>
@@ -63,30 +68,49 @@ const styles = StyleSheet.create({
   modalWrapper: {
     flex: 1,
     backgroundColor: "#140029",
-    padding: 40,
     justifyContent: "center",
+    alignItems: "center",
   },
 
   modalContainer: {
+    flex: 0.35,
+    width: 250,
     border: ".25rem solid #a193d945",
     borderRadius: 25,
-    // backgroundColor: "pink",
+    // backgroundColor: "green",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+
+  pressableWrapper: {
+    // backgroundColor: "orange",
+    flex: 0.5,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  sectionTitle: {
+    // backgroundColor: "blue",
+    height: "60%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
 
   sectionTitleText: {
     color: "white",
-    textAlign: "center",
-    fontSize: 25,
+    fontSize: 22,
     fontFamily: "HennyPenny-Regular",
   },
 
   optionNotSelected: {
     color: "#a193d9",
-    fontSize: 30,
+    fontSize: 20,
   },
 
   optionSelected: {
     color: "magenta",
-    fontSize: 30,
+    fontSize: 20,
   },
 });

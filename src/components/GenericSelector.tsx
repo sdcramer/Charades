@@ -7,6 +7,8 @@ const GenericSelector = (props: {
   stateVariable: string | number;
   optionSelected: Object;
   optionNotSelected: Object;
+  pressableWrapperStyle: Object;
+  sectionTitleStyle: Object;
   sectionTitleTextStyle: Object;
 }) => {
   const {
@@ -16,50 +18,66 @@ const GenericSelector = (props: {
     stateVariable,
     optionSelected,
     optionNotSelected,
+    pressableWrapperStyle,
+    sectionTitleStyle,
     sectionTitleTextStyle,
   } = props;
 
   return (
-    <Pressable style={styles.pressableWrapper}>
+    <Pressable style={pressableWrapperStyle}>
+        <View style={sectionTitleStyle}>
       <View style={styles.sectionTitleContainer}>
-        <Text style={sectionTitleTextStyle}>{sectionTitle}</Text>
-      </View>
-      <View style={styles.optionsContainer}>
-        {options.map((option) => (
-          <Pressable
-            onPress={() => stateFunction(option)}
-            // style={stateVariable === option ? <Text style={styles.selectedText}>{option}</Text> : {}}
-          >
-            <Text
-              style={
-                stateVariable === option ? optionSelected : optionNotSelected
-              }
+          <View style={styles.sectionTitleCard}>
+            <Text style={sectionTitleTextStyle}>{sectionTitle}</Text>
+          </View>
+        </View>
+        <View style={styles.optionsContainer}>
+          {options.map((option) => (
+            <Pressable
+              onPress={() => stateFunction(option)}
+              // style={stateVariable === option ? <Text style={styles.selectedText}>{option}</Text> : {}}
             >
-              {option}
-            </Text>
-          </Pressable>
-        ))}
+              <Text
+                style={
+                  stateVariable === option ? optionSelected : optionNotSelected
+                }
+              >
+                {option}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
       </View>
     </Pressable>
   );
 };
-
 const styles = StyleSheet.create({
-  pressableWrapper: {
-    flex: 1,
-    // backgroundColor: "pink",
-    width: '100%',
+  
+ 
+  sectionTitleContainer: {
+    height: "35%",
+    width: "100%",
+    // backgroundColor: "red",
     justifyContent: 'center',
+    alignItems: "center",
   },
 
-  sectionTitleContainer: {
-    // backgroundColor: 'red',
+  sectionTitleCard: {
+    // backgroundColor: "purple",
+    width: '70%',
+    justifyContent: "center",
+    alignItems: "center",
+    height: "80%",
+   
   },
 
   optionsContainer: {
+    // backgroundColor: "pink",
+    height: "35%",
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    width: '100%',
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "100%",
   },
 });
 

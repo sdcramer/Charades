@@ -18,36 +18,42 @@ const GenericInput = (props: {
   const { sectionTitle, setMinYear, setMaxYear, minYear, maxYear } = props;
 
   return (
-    
-
     <Pressable style={styles.pressable}>
-      <View style={styles.yearSectionContainer}>
-        <Text style={styles.sectionTitle}>{sectionTitle}</Text>
+      <View style={styles.sectionWrapper}>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>{sectionTitle}</Text>
+        </View>
+        <View style={styles.inputWrapper}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              value={minYear}
+              textContentType={"Min"}
+              inputMode={"numeric"}
+              keyboardType={"numeric"}
+              maxLength={4}
+              placeholder={"Min"}
+              placeholderTextColor={"#a193d9"}
+              onChange={(e) => setMinYear(e.target.value)}
+            />
+          </View>
+          <View>
+            <Text style={styles.minMax}>-</Text>
+          </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            value={minYear}
-            textContentType={"Min"}
-            inputMode={"numeric"}
-            keyboardType={"numeric"}
-            maxLength={4}
-            placeholder={"Min"}
-            placeholderTextColor={"#a193d9"}
-            onChange={(e) => setMinYear(e.target.value)}
-          ></TextInput>
-          <Text style={styles.minMax}>-</Text>
-          <TextInput
-            style={styles.input}
-            value={maxYear}
-            textContentType={"Max"}
-            inputMode={"numeric"}
-            keyboardType={"numeric"}
-            maxLength={4}
-            placeholder={"Max"}
-            placeholderTextColor={"#a193d9"}
-            onChange={(e) => setMaxYear(e.target.value)}
-          ></TextInput>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              value={maxYear}
+              textContentType={"Max"}
+              inputMode={"numeric"}
+              keyboardType={"numeric"}
+              maxLength={4}
+              placeholder={"Max"}
+              placeholderTextColor={"#a193d9"}
+              onChange={(e) => setMaxYear(e.target.value)}
+            />
+          </View>
         </View>
       </View>
     </Pressable>
@@ -56,48 +62,72 @@ const GenericInput = (props: {
 
 const styles = StyleSheet.create({
   pressable: {
-    // backgroundColor: 'orange',
+    // backgroundColor: "orange",
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
   },
 
-  // yearSectionContainer: {
-  //   backgroundColor: 'blue',
-  //   flex: 1,
-  // },
+  sectionWrapper: {
+    flex: 0.6,
+    width: "100%",
+    // backgroundColor: "blue",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  sectionContainer: {
+    // backgroundColor: "red",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "35%",
+    width: "100%",
+  },
 
   sectionTitle: {
     color: "white",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 16,
     fontFamily: "HennyPenny-Regular",
-    // paddingTop: 10,
+  },
+
+  inputWrapper: {
+    width: "90%",
+    height: "42%",
+    // backgroundColor: "pink",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 
   inputContainer: {
-    flexDirection: "row",
-    // marginLeft: 5,
-    // marginRight: 5,
-    flex: 1,
-    padding: 8,
+    // backgroundColor: 'green',
+    height: "100%",
   },
 
   input: {
-    flex: 1,
-    width: 5,
-    height: 30,
-    border: "solid #a193d945",
+    width: 70,
+    height: "100%",
+    border: ".18rem solid #a193d945",
     borderRadius: 8,
     color: "magenta",
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 12,
   },
+
+  // minMaxContainer: {
+  //   backgroundColor: 'magenta',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   height: '100%',
+  // },
 
   minMax: {
     flex: 1,
     textAlign: "center",
+    justifyContent: "center",
     color: "white",
-    fontSize: 25,
+    fontSize: 18,
   },
 });
 

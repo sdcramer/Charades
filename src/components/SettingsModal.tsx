@@ -21,10 +21,11 @@ const SettingsModal = (props: {
 
   return (
     <>
-      <TouchableOpacity onPress={() => setIsModalVisible(!isModalVisible)}>
-        <View style={styles.settingsBtn}>
-          <Text style={styles.settingsBtnText}>{settingsBtnName}</Text>
-        </View>
+      <TouchableOpacity
+        style={styles.settingsBtnContainer}
+        onPress={() => setIsModalVisible(!isModalVisible)}
+      >
+        <Text style={styles.settingsBtnText}>{settingsBtnName}</Text>
       </TouchableOpacity>
 
       <Modal
@@ -58,14 +59,13 @@ const SettingsModal = (props: {
 export default SettingsModal;
 
 const styles = StyleSheet.create({
- 
-  settingsBtn: {
+  settingsBtnContainer: {
     backgroundColor: "#5E3AC7",
-    width: 135,
-    height: 30,
-    alignItems: "center",
-    justifyContent: "center",
+    height: '85%',
+    width: 150,
     borderRadius: 10,
+    justifyContent: "center",
+    // alignItems: "center",
   },
 
   settingsBtnText: {

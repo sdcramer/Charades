@@ -30,13 +30,13 @@ const TeamsModal = (props: {
     setGameState(newGameState);
   }, [numOfTeams]);
 
+  
   return (
     <SettingsModal
       settingsBtnName={settingsBtnName}
       modalWrapper={styles.modalWrapper}
       modalContainer={styles.modalContainer}
     >
-
       <GenericSelector
         options={teamOptions}
         stateVariable={numOfTeams}
@@ -44,6 +44,8 @@ const TeamsModal = (props: {
         sectionTitle={"Teams"}
         optionSelected={styles.optionSelected}
         optionNotSelected={styles.optionNotSelected}
+        pressableWrapperStyle={styles.pressableWrapper}
+        sectionTitleStyle={styles.sectionTitle}
         sectionTitleTextStyle={styles.sectionTitleText}
       ></GenericSelector>
     </SettingsModal>
@@ -57,22 +59,38 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#140029",
     justifyContent: "center",
-    alignItems:'center',
+    alignItems: "center",
   },
 
   modalContainer: {
+    // backgroundColor:'green',
+    flex: 0.35,
+    width: 250,
+    justifyContent: "center",
     border: ".25rem solid #a193d945",
     borderRadius: 25,
-    alignItems: 'center',
-    padding: 40,
+  },
+
+  pressableWrapper: {
+    // backgroundColor: "orange",
+    flex: 0.5,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  sectionTitle: {
+    // backgroundColor: "blue",
+    height: "60%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
 
   sectionTitleText: {
+    fontSize: 22,
     color: "white",
-    textAlign: "center",
-    fontSize: 20,
     fontFamily: "HennyPenny-Regular",
-    // paddingTop: 10,
   },
 
   optionNotSelected: {

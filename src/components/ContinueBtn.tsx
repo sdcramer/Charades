@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity } from "react-native-web";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native-web";
 import { GameState } from "../App";
 
 const ContinueBtn = (props: {
@@ -48,19 +48,32 @@ const ContinueBtn = (props: {
     });
 
     const rank = teamsArr.map((team) => team[0]);
-    
 
     newGameState.rank = rank;
     setGameState(newGameState);
   };
 
   return (
-    <View>
-      <TouchableOpacity onPress={continueBtnHandler}>
-        <Text>{title}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.continueBtn} onPress={continueBtnHandler}>
+      <Text style={styles.continueBtnText}>{title}</Text>
+    </TouchableOpacity>
   );
 };
 
 export default ContinueBtn;
+
+const styles = StyleSheet.create({
+  continueBtn: {
+    backgroundColor: "#5E3AC7",
+    height: "100%",
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+  },
+
+  continueBtnText: {
+    fontSize: 18,
+    color: 'white',
+  }
+});
