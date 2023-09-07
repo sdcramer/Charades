@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
 
   noBtn: {
     backgroundColor: "#5E3AC7",
-    height: "100%",
+    height: "95%",
     width: 80,
     alignItems: "center",
     borderRadius: 10,
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
 
   yesBtn: {
     backgroundColor: "#5E3AC7",
+    height: '95%',
     width: 80,
     alignItems: "center",
     borderRadius: 10,

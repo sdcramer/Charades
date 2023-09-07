@@ -23,7 +23,6 @@ const SearchBar = (props: {
         placeholder={"Search"}
         placeholderTextColor={"#a193d9"}
         value={searchTerm}
-        maxLength={4}
         textAlign={"center"}
         onChangeText={(newText: string) => {
           setSearchTerm(newText);

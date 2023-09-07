@@ -32,9 +32,7 @@ const FiltersModal = (props: {
   } = props;
 
   const [isPhotoMode, setIsPhotoMode] = useState(false);
-  const [filteredSearchCategories, setFilteredSearchCategories] = useState<
-    Category[]
-  >([]);
+  const [searchCategories, setSearchCategories] = useState<Category[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
   const [minYear, setMinYear] = useState<number>();
@@ -42,7 +40,7 @@ const FiltersModal = (props: {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    setFilteredSearchCategories(categories);
+    setSearchCategories(categories);
   }, []);
 
   useEffect(() => {
@@ -68,36 +66,100 @@ const FiltersModal = (props: {
     newGameState.photo = isPhotoMode;
     setGameState(newGameState);
   }, [isPhotoMode]);
-
+  
   useEffect(() => {
     const newGameState = structuredClone(gameState);
     newGameState.categories = selectedCategories;
+    setGameState(newGameState);
+    console.log('4. gameState.categories after useEffect =', gameState.categories)
   }, [selectedCategories]);
 
-  const categoryHandler = (itemName: string) => {
-    let chosenCategories = selectedCategories;
-    if (selectedCategories.includes(itemName)) {
-      const filteredCategories = selectedCategories.filter(
-        (categoryName) => categoryName !== itemName
-      );
-      console.log("filteredCategories =", filteredCategories);
-      setSelectedCategories(filteredCategories);
-    } else {
-      chosenCategories = [...selectedCategories, itemName];
-      setSelectedCategories(chosenCategories);
-      console.log("selectedCategories =", selectedCategories);
-      setSearchTerm("");
-      setFilteredSearchCategories(categories);
-    }
-    console.log("selectedCategories at end of function", selectedCategories);
-  };
 
-  console.log("selectedCategories after function =", selectedCategories);
+
+  const categoryHandler = (itemName: string) => {
+    let newSelectedCategories;
+    if (selectedCategories.includes(itemName)) {
+      newSelectedCategories = selectedCategories.filter((category) => category !== itemName);
+    } else {
+      newSelectedCategories = [...selectedCategories, itemName]
+      console.log('newSelectedCateogories =', newSelectedCategories)
+    }
+    setSelectedCategories(newSelectedCategories);
+    setSearchCategories(categories);
+}
+
+
+
+
+
+
+  // const categoryHandler = (itemName: string) => {
+  //   if (selectedCategories.includes(itemName)) {
+  //     let searchCategoriesClicked: string[] = selectedCategories.filter(
+  //       (name) => name !== itemName
+  //     );
+  //     setSelectedCategories(searchCategoriesClicked);
+  //     console.log(" 1. selectedCategories after .filter =", selectedCategories);
+  //   } else {
+  //     selectedCategories.push(itemName);
+  //     let searchCategoriesClicked: string[] = [...selectedCategories];
+
+  //     console.log(
+  //       "2. selectedCategories after push and spread =",
+  //       selectedCategories
+  //     );
+  //     setSelectedCategories(searchCategoriesClicked);
+  //   }
+  //   setSearchTerm("");
+  //   setSearchCategories(categories)
+  //   return null;
+  // };
+  
+  // console.log(
+  //   "3. selectedCategories at end of handler =",
+  //   selectedCategories
+  // );
+
+
+    // selected category is passed into categoryHandler function
+    // need to capture selected category and add it to an array
+    //.push(categoryName)
+    
+    // variable storing array of selected category names cannot be reset each time the function runs
+    // at start of function set the variable storing the array of category names to the state variable that also stores an array of the selected category names
+    
+    // dedupe array by checking if selected category name already exists within array; if so remove it.
+    // if (array.includes(categoryName) {
+      //  array.filter( () => )
+      //} else {
+        //  array.push(categoryName)
+        //}
+        
+        // save array containing selected categories to state variable selectedCategories.
+        // reset searchbar with empty " " after selection is made
+
+  // const categoryHandler = (itemName: string) => {
+  //   let chosenCategories = selectedCategories;
+  //   if (selectedCategories.includes(itemName)) {
+  //     const filteredCategories = selectedCategories.filter(
+  //       (categoryName) => categoryName !== itemName
+  //     );
+  //     console.log("filteredCategories =", filteredCategories);
+  //     setSelectedCategories(filteredCategories);
+  //   } else {
+  //     chosenCategories = [...selectedCategories, itemName];
+  //     setSelectedCategories(chosenCategories);
+  //     console.log("selectedCategories =", selectedCategories);
+  //     setSearchTerm("");
+  //     setFilteredSearchCategories(categories);
+  //   }
+  //   console.log("selectedCategories at end of function", selectedCategories);
+  // };
   const handleAvailableCategories = (str: string) => {
     const filteredSearch = categories.filter((category) =>
       category.name.startsWith(str)
     );
-    setFilteredSearchCategories(filteredSearch);
+    setSearchCategories(filteredSearch);
   };
 
   const renderItem = ({ item }: any) => (
@@ -182,7 +244,7 @@ const FiltersModal = (props: {
       <View style={styles.flatlistContainer}>
         <FlatList
           style={styles.flatList}
-          data={filteredSearchCategories}
+          data={searchCategories}
           keyExtractor={(item: Category) => item.id}
           renderItem={renderItem}
           contentContainerStyle={styles.contentContainer}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native-web";
 
-const Counter = (props: { seconds: number; setIsCountFinished: Function; counterSizeStyle: Object }) => {
+const Counter = (props: { seconds: number; setIsCountFinished: Function; counterSizeStyle: Object;}) => {
   const { seconds, setIsCountFinished, counterSizeStyle } = props;
   const [count, setCount] = useState<number>(seconds);
 
@@ -16,6 +16,7 @@ const Counter = (props: { seconds: number; setIsCountFinished: Function; counter
       clearInterval(timer);
     };
   }, [count]);
+
 
   return <Text style={[styles.timerText, counterSizeStyle]}>{count}</Text>;
 };

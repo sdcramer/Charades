@@ -23,6 +23,7 @@ const TeamsModal = (props: {
         completedRounds: 0,
         score: 0,
         missed: 0,
+        roundScores: [],
       };
     }
     newGameState.teams = teams;

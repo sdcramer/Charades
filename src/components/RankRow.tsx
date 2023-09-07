@@ -11,7 +11,7 @@ const RankRow = (props: {
 
   return (
     <>
-      {msg ? <Text>{msg}</Text> : ''}
+      {msg ? <Text>{msg}</Text> : ""}
       <View style={styles.rankRowTextContainer}>
         <Text style={styles.rankRowText}>
           <Text>{place}</Text>
@@ -47,9 +47,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     color: "#a193d9",
-  },
-
-  firstPlaceText: {
-    color: "gold",
   },
 });

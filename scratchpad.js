@@ -6,6 +6,8 @@
 
 const numArray = [5, 9, 7, 6, 9, 10, 8, 8];
 
+
+
 const sorted = (array) => {
   return array
     .sort((a, b) => a - b)
@@ -41,10 +43,12 @@ const arrange = (array1, array2) => {
   array1.forEach((element) => {
     newArray.push(array2[element]);
   });
-  return console.log(newArray);
+  return console.log('typeof newArray =', typeof(newArray));
 };
 
 arrange(sortingArray, initialArray);
+
+
 
 // CHALLENGE #3
 // Write a function that returns the url with anything after the anchor (#) removed.
@@ -112,15 +116,24 @@ const triangle2 = (num) => {
   let totalStars = 0;
 
   for (let i = 0; i < num; i++) {
-  
-    stars.push(i + 1)
+    stars.push(i + 1);
     console.log(stars);
   }
- return totalStars = stars.reduce((a,b) => a + b )
-  
+  return (totalStars = stars.reduce((a, b) => a + b));
 };
 
 console.log(triangle2(3));
 
 
+// reaction = the string 'yikes'
+// let variable is used which allows it to be redeclared with a new value
+let reaction = 'yikes'
 
+// reaction at index of 0 would be the 'y' in 'yikes'; so reaction[0] = 'l' would replace the 'y' at index 0 with 'l'
+// reaction[0] = 'l'
+
+//console.log(readtion) will return 'likes'
+// console.log(reaction);
+
+const bool = true
+console.log(typeof(bool))

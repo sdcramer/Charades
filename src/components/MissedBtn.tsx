@@ -29,12 +29,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#5E3AC7",
     alignItems: "center",
     borderRadius: 10,
-    width: 100,
+    width: 95,
+    height: 39,
   },
 
   missedBtnText: {
     color: "magenta",
     fontWeight: 'bold',
-    fontSize: 35,
+    fontSize: 32,
   },
 });

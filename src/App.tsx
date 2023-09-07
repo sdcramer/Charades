@@ -26,14 +26,12 @@ import Counter from "./components/Counter";
 import GameSummary from "./components/GameSummary";
 
 export interface IsCard {
-  card: Object;
   id: number;
   category: string;
   img: string;
   name: string;
-  title: string;
   description: string;
-  age: number;
+  age: string;
 }
 
 export interface Category {
@@ -50,6 +48,7 @@ export interface Team {
   completedRounds: number;
   score: number;
   missed: number;
+  roundScores: number[];
 }
 
 export interface GameState {
@@ -87,7 +86,7 @@ const App = () => {
     numOfTeams: 2,
     rounds: 3,
     currentRound: 1,
-    roundTime: 2,
+    roundTime: 30,
     age: "",
     year: {
       min: 0,
@@ -100,16 +99,20 @@ const App = () => {
         completedRounds: 0,
         score: 0,
         missed: 0,
+        roundScores: [],
       },
+
       2: {
         completedRounds: 0,
         score: 0,
         missed: 0,
+        roundScores: [],
       },
     },
   };
 
   const [gameState, setGameState] = useState(initialGameState);
+  console.log('typeof gameState.rank =', typeof(gameState.rank))
   const teamOptions = [2, 3, 4];
   const genericBtnNames = [
     "Start",
@@ -160,21 +163,20 @@ const App = () => {
     },
 
     {
-      id: 7,
+      id: 8,
       name: "Activities",
     },
 
     {
-      id: 7,
+      id: 9,
       name: "Items",
     },
   ];
 
-  const cards: IsCard = [
+  const cards: IsCard[] = [
     {
       id: 1,
       name: "elephant",
-      title: "elephant",
       description: "elephant",
       img: "./components/assets/elephant",
       age: "kids",
@@ -184,7 +186,6 @@ const App = () => {
     {
       id: 2,
       name: "gorilla",
-      title: "gorilla",
       description: "gorilla",
       img: "./components/assets/gorilla",
       age: "kids",
@@ -194,7 +195,6 @@ const App = () => {
     {
       id: 3,
       name: "singing",
-      title: "singing",
       description: "",
       img: "./components/assets/singing",
       age: "kids",
@@ -204,7 +204,6 @@ const App = () => {
     {
       id: 4,
       name: "bow and arrow",
-      title: "bow and arrow",
       description: "bow and arrow",
       img: "./components/assets/bowAndArrow",
       age: "adults",
@@ -214,7 +213,6 @@ const App = () => {
     {
       id: 5,
       name: "roller-skating",
-      title: "roller-skating",
       description: "roller-skating",
       img: "./components/assets/rollerSkating",
       age: "kids",
@@ -224,7 +222,6 @@ const App = () => {
     {
       id: 6,
       name: "E.T.",
-      title: "E.T.",
       description: "E.T.",
       img: "",
       age: "teens",
@@ -234,7 +231,6 @@ const App = () => {
     {
       id: 7,
       name: "doctor",
-      title: "doctor",
       description: "doctor",
       img: "./components/assets/doctor",
       age: "kids",
@@ -244,7 +240,6 @@ const App = () => {
     {
       id: 8,
       name: "drums",
-      title: "drums",
       description: "drums",
       img: "./components/assets/drums",
       age: "kids",
@@ -254,7 +249,6 @@ const App = () => {
     {
       id: 9,
       name: "swimming",
-      title: "swimming",
       description: "swimming",
       img: "./components/assets/swimming",
       age: "teens",
@@ -264,7 +258,6 @@ const App = () => {
     {
       id: 10,
       name: "spider-man",
-      title: "spider-man",
       description: "green goblin",
       img: "",
       age: "adults",
@@ -421,7 +414,7 @@ const App = () => {
       </View>
     );
   } else if (gamePhase === "preTurnCountDown") {
-    return <PreTurnCounter setGamePhase={setGamePhase} seconds={1} />;
+    return <PreTurnCounter setGamePhase={setGamePhase} seconds={5} />;
   } else if (gamePhase === "turn") {
     return (
       <>
@@ -431,6 +424,8 @@ const App = () => {
             <NavBar
               setGamePhase={setGamePhase}
               seconds={gameState.roundTime}
+              gameState={gameState}
+              setGameState={setGameState}
             ></NavBar>
           </View>
           <View style={styles.cardViewContainer}>
@@ -439,7 +434,11 @@ const App = () => {
           <View style={styles.scoreBtnsWrapper}>
             <View style={styles.scoreBtnsContainer}>
               <MissedBtn gameState={gameState} setGameState={setGameState} />
-              <CorrectBtn gameState={gameState} setGameState={setGameState} />
+              <CorrectBtn
+                gameState={gameState}
+                setGameState={setGameState}
+                gamePhase={gamePhase}
+              />
             </View>
             <View style={styles.quitBtnWrapper}>
               <View style={styles.quitBtnContainer}>
@@ -458,7 +457,12 @@ const App = () => {
           <Text style={styles.postTurnTimesUpText}>Time's Up!</Text>
           <Text style={styles.postTurnTeamScoreText}>
             Team {gameState.currentTeamsTurn} scored{" "}
-            {gameState.teams[gameState.currentTeamsTurn].score} points
+            {
+              gameState.teams[gameState.currentTeamsTurn].roundScores[
+                gameState.currentRound -1  
+              ]
+            }{" "}
+            points
           </Text>
         </View>
         <View style={styles.continueBtnWrapper}>
@@ -478,12 +482,10 @@ const App = () => {
       <View style={styles.mainWrapper}>
         <View style={styles.emptyViewContainer}></View>
         <View style={styles.postTurnMessageContainer}>
-          <Text style={styles.postTurnTimesUpText}>Game Over!</Text>
-          <Text style={styles.postTurnTeamScoreText}>
-            Team {gameState.currentTeamsTurn} scored{" "}
-            {gameState.teams[gameState.currentTeamsTurn].score} points
-          </Text>
-          <EndGameSummary gameState={gameState}></EndGameSummary>
+          <View style={styles.gameOverTextContainer}>
+            <Text style={styles.postTurnTimesUpText}>Game Over!</Text>
+            <EndGameSummary gameState={gameState}></EndGameSummary>
+          </View>
         </View>
         <View style={styles.scoreBtnsWrapper}>
           <View style={styles.quitBtnWrapper}>
@@ -527,7 +529,7 @@ const styles = StyleSheet.create({
 
   emptyViewContainer: {
     // border: "solid white",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     flex: 1,
     width: "100%",
   },
@@ -577,7 +579,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     width: "100%",
-    height: "22%",
+    height: "16%",
   },
 
   preTurnMessageContainer: {
@@ -586,6 +588,14 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     justifyContent: "center",
+    alignItems: "center",
+  },
+
+  gameOverTextContainer: {
+    // border: "solid green",
+    flex: 1,
+    width: "100%",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
 
@@ -611,7 +621,7 @@ const styles = StyleSheet.create({
 
   gameSummaryContainer: {
     // border: "solid yellow",
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
     width: "100%",
     flex: 1,
     alignItems: "center",
@@ -682,7 +692,7 @@ const styles = StyleSheet.create({
   },
 
   quitBtnWrapper: {
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
     flex: 0.5,
     width: "100%",
     justifyContent: "center",
@@ -692,14 +702,14 @@ const styles = StyleSheet.create({
   quitBtnContainer: {
     // backgroundColor: "red",
     width: "100%",
-    height: "42%",
+    height: "39%",
     justifyContent: "center",
     alignItems: "center",
   },
 
   postTurnMessageContainer: {
     flex: 1,
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
