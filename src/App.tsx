@@ -84,10 +84,10 @@ const App = () => {
   const initialGameState: GameState = {
     rank: [],
     currentTeamsTurn: 1,
-    numOfTeams: 0,
-    rounds: 0,
+    numOfTeams: 2,
+    rounds: 3,
     currentRound: 1,
-    roundTime: 0,
+    roundTime: 30,
     age: "",
     year: {
       min: 0,
