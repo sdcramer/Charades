@@ -29,11 +29,9 @@ const TeamsAccordion = (props: {
     setGameState(newGameState);
   }, [numOfTeams]);
 
-  console.log("after useEffect on TeamsAccordion run, gameState =", gameState);
-
   return (
     <Accordion accordionName={accordionName}>
-      <GenericSelector 
+      <GenericSelector
         options={teamOptions}
         stateFunction={setNumOfTeams}
         stateVariable={numOfTeams}
@@ -50,8 +48,6 @@ const TeamsAccordion = (props: {
       top: 365,
     },
   });
-
 };
-
 
 export default TeamsAccordion;

@@ -28,7 +28,6 @@ const ContinueBtn = (props: {
     }
 
     const teamsArr: any = structuredClone(Object.entries(newGameState.teams));
-    console.log("teamsArr =", teamsArr);
 
     teamsArr.sort((a: any, b: any) => {
       // are there any ties?
@@ -41,8 +40,8 @@ const ContinueBtn = (props: {
           a[1].score = a[1].score + 0.1;
         }
 
-        console.log("tie occurred; 0.1 added to a team's score", teamsArr);
-        console.log("newGameState just before sort", newGameState);
+        // console.log("tie occurred; 0.1 added to a team's score", teamsArr);
+        // console.log("newGameState just before sort", newGameState);
       }
       return b[1].score - a[1].score;
     });

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native-web";
+import { View, StyleSheet, Text } from "react-native-web";
 import RankRow from "./RankRow";
 
 const GameSummary = (props: { gameState: GameState }) => {
@@ -13,7 +13,7 @@ const GameSummary = (props: { gameState: GameState }) => {
 
   const createRank: any = (r: any, i: any) => {
     const place = positions[i];
-    const msg = i === 0 ? `Team ${r} Wins!` : ''
+    const msg = i === 0 ? `Team ${r} Wins!` : "";
 
     return (
       <View style={styles.rankRow}>
@@ -28,9 +28,11 @@ const GameSummary = (props: { gameState: GameState }) => {
   };
 
   return (
-    <>
-      <View style={styles.rankRowContainer}>{gameState.rank.map(createRank)}</View>
-    </>
+   
+      <View style={styles.rankRowContainer}>
+        {gameState.rank.map(createRank)}
+      </View>
+    
   );
 };
 
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
   rankRowContainer: {
     border: "solid #a193d945",
     borderRadius: 10,
-    flex: 0.9,
+    flex: 0.7,
     width: "80%",
     alignItems: "center",
     justifyContent: "space-evenly",

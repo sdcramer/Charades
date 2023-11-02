@@ -18,8 +18,6 @@ const QuitModal = (props: { setGamePhase: Function; gamePhase: string }) => {
     }
   }, [gamePhase]);
 
-  console.log("isModalVisible =", isModalVisible);
-
   return (
     <>
       <GenericBtn
@@ -33,26 +31,28 @@ const QuitModal = (props: { setGamePhase: Function; gamePhase: string }) => {
         presentationStyle={"formSheet"}
         onRequestClose={() => setIsModalVisible(!isModalVisible)}
       >
-        <View style={styles.quitModalWrapper}>
-          <View style={styles.quitTextWrapper}>
-            <View style={styles.quitTextCard}>
-              <View style={styles.quitTextContainer}>
-                <Text style={styles.quitText}>Quit game?</Text>
-              </View>
-              <View style={styles.noYesBtnContainer}>
-                <View style={styles.noBtn}>
-                  <GenericBtn
-                    setStateFunction={setIsModalVisible}
-                    title={"No"}
-                    option={false}
-                  ></GenericBtn>
+        <View style={styles.quitModalMainWrapper}>
+          <View style={styles.quitModalMainContainer}>
+            <View style={styles.quitTextWrapper}>
+              <View style={styles.quitTextCard}>
+                <View style={styles.quitTextContainer}>
+                  <Text style={styles.quitText}>Quit game?</Text>
                 </View>
-                <View style={styles.yesBtn}>
-                  <GenericBtn
-                    setStateFunction={setGamePhase}
-                    title={"Yes"}
-                    option={"start"}
-                  ></GenericBtn>
+                <View style={styles.noYesBtnContainer}>
+                  <View style={styles.noBtn}>
+                    <GenericBtn
+                      setStateFunction={setIsModalVisible}
+                      title={"No"}
+                      option={false}
+                    ></GenericBtn>
+                  </View>
+                  <View style={styles.yesBtn}>
+                    <GenericBtn
+                      setStateFunction={setGamePhase}
+                      title={"Yes"}
+                      option={"start"}
+                    ></GenericBtn>
+                  </View>
                 </View>
               </View>
             </View>
@@ -64,11 +64,21 @@ const QuitModal = (props: { setGamePhase: Function; gamePhase: string }) => {
 };
 
 const styles = StyleSheet.create({
-  quitModalWrapper: {
+  quitModalMainWrapper: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "black",
+  },
+
+  quitModalMainContainer: {
+    height: 932,
+    width: 430,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#140029",
+    border: "solid #a193d945 8px",
+    borderRadius: "15px",
   },
 
   quitTextWrapper: {
@@ -83,11 +93,11 @@ const styles = StyleSheet.create({
   },
 
   quitTextCard: {
-    flex: .7,
+    flex: 0.7,
     // backgroundColor: 'yellow',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
 
   quitTextContainer: {
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
     width: "100%",
     // backgroundColor: "green",
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 
   quitText: {
@@ -113,7 +123,7 @@ const styles = StyleSheet.create({
   },
 
   noBtn: {
-    backgroundColor: "#5E3AC7",
+    // backgroundColor: "#5E3AC7",
     height: "95%",
     width: 80,
     alignItems: "center",
@@ -122,8 +132,8 @@ const styles = StyleSheet.create({
   },
 
   yesBtn: {
-    backgroundColor: "#5E3AC7",
-    height: '95%',
+    // backgroundColor: "#5E3AC7",
+    height: "95%",
     width: 80,
     alignItems: "center",
     borderRadius: 10,

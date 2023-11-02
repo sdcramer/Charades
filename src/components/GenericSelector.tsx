@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
+
 });
 
 export default GenericSelector;

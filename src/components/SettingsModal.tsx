@@ -12,11 +12,12 @@ import GenericBtn from "./GenericBtn";
 
 const SettingsModal = (props: {
   settingsBtnName: string;
+  mainWrapper: Object;
   modalWrapper: Object;
   modalContainer: Object;
   children: JSX.Element[] | JSX.Element;
 }) => {
-  const { settingsBtnName, modalWrapper, modalContainer } = props;
+  const { settingsBtnName, mainWrapper, modalWrapper, modalContainer } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
@@ -40,15 +41,17 @@ const SettingsModal = (props: {
             setIsModalVisible(!isModalVisible);
           }}
         >
-          <View style={modalWrapper}>
-            {/* Option to add explicit button to close modal */}
-            {/* <TouchableOpacity
+          <View style={mainWrapper}>
+            <View style={modalWrapper}>
+              {/* Option to add explicit button to close modal */}
+              {/* <TouchableOpacity
                   onPress={() => setIsModalVisible(!isModalVisible)}
                   >
                   <Text style={styles.modalToggle}>X</Text>
                 </TouchableOpacity> */}
 
-            <Pressable style={modalContainer}>{props.children}</Pressable>
+              <Pressable style={modalContainer}>{props.children}</Pressable>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -61,7 +64,7 @@ export default SettingsModal;
 const styles = StyleSheet.create({
   settingsBtnContainer: {
     backgroundColor: "#5E3AC7",
-    height: '85%',
+    height: "85%",
     width: 150,
     borderRadius: 10,
     justifyContent: "center",

@@ -26,8 +26,6 @@ const RoundsAccordion = (props: {
     setGameState(newGameState);
   }, [numOfRoundTime]);
 
-  console.log("after useEffects run RoundsAccordion, gameState =", gameState);
-
   return (
     <Accordion accordionName={accordionName}>
       <GenericSelector

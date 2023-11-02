@@ -31,10 +31,10 @@ const TeamsModal = (props: {
     setGameState(newGameState);
   }, [numOfTeams]);
 
-  
   return (
     <SettingsModal
       settingsBtnName={settingsBtnName}
+      mainWrapper={styles.mainWrapper}
       modalWrapper={styles.modalWrapper}
       modalContainer={styles.modalContainer}
     >
@@ -56,17 +56,34 @@ const TeamsModal = (props: {
 export default TeamsModal;
 
 const styles = StyleSheet.create({
-  modalWrapper: {
+  mainWrapper: {
     flex: 1,
-    backgroundColor: "#140029",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "black",
   },
+
+  modalWrapper: {
+    height: 932,
+    width: 430,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#140029",
+    border: "solid #a193d945 8px",
+    borderRadius: "15px",
+  },
+
+  // modalWrapper: {
+  //   flex: 1,
+  //   backgroundColor: "#140029",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
 
   modalContainer: {
     // backgroundColor:'green',
-    flex: 0.35,
-    width: 250,
+    flex: 0.25,
+    width: 320,
     justifyContent: "center",
     border: ".25rem solid #a193d945",
     borderRadius: 25,

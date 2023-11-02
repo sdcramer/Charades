@@ -18,7 +18,6 @@ const FiltersModal = (props: {
   settingsBtnName: string;
   genericInputNames: string[];
   genericSelectorNames: string[];
-  charadeCards: IsCard[];
   gameState: GameState;
   setGameState: Function;
   categories: Category[];
@@ -31,11 +30,11 @@ const FiltersModal = (props: {
     setGameState,
   } = props;
 
-  const [isPhotoMode, setIsPhotoMode] = useState(false);
+  const [isPhotoMode, setIsPhotoMode] = useState(true);
   const [searchCategories, setSearchCategories] = useState<Category[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
-  const [minYear, setMinYear] = useState<number>();
+  const [minYear, setMinYear] = useState <number>();
   const [maxYear, setMaxYear] = useState<number>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -52,7 +51,6 @@ const FiltersModal = (props: {
   useEffect(() => {
     const newGameState = structuredClone(gameState);
     newGameState.year.min = minYear;
-    setGameState(newGameState);
   }, [minYear]);
 
   useEffect(() => {
@@ -71,7 +69,6 @@ const FiltersModal = (props: {
     const newGameState = structuredClone(gameState);
     newGameState.categories = selectedCategories;
     setGameState(newGameState);
-    console.log('4. gameState.categories after useEffect =', gameState.categories)
   }, [selectedCategories]);
 
 
@@ -82,7 +79,6 @@ const FiltersModal = (props: {
       newSelectedCategories = selectedCategories.filter((category) => category !== itemName);
     } else {
       newSelectedCategories = [...selectedCategories, itemName]
-      console.log('newSelectedCateogories =', newSelectedCategories)
     }
     setSelectedCategories(newSelectedCategories);
     setSearchCategories(categories);
@@ -182,6 +178,7 @@ const FiltersModal = (props: {
   return (
     <SettingsModal
       settingsBtnName={settingsBtnName}
+      mainWrapper={styles.mainWrapper}
       modalWrapper={styles.modalWrapper}
       modalContainer={styles.modalContainer}
       // setStateFunction={setGamePhase}
@@ -267,16 +264,33 @@ const FiltersModal = (props: {
 export default FiltersModal;
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "black",
+    },
+  
   modalWrapper: {
-    flex: 1,
-    backgroundColor: "#140029",
+    height: 932,
+    width: 430,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#140029",
+    border: "solid #a193d945 8px",
+    borderRadius: "15px",
   },
+
+  // modalWrapper: {
+  //   flex: 1,
+  //   backgroundColor: "#140029",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
 
   modalContainer: {
     flex: 0.8,
-    width: 250,
+    width: 320,
     border: ".25rem solid #a193d945",
     borderRadius: 25,
   },

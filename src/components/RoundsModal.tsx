@@ -11,7 +11,7 @@ const RoundsModal = (props: {
   const { settingsBtnName, gameState, setGameState } = props;
 
   const [numOfRounds, setNumOfRounds] = useState<3 | 5 | 7>(3);
-  const [numOfRoundTime, setNumOfRoundTime] = useState< 2 | 30 | 60 | 90>(2);
+  const [numOfRoundTime, setNumOfRoundTime] = useState<30 | 60 | 90>(30);
   const roundTimes = ["30", "60", "90"];
   const roundOptions = ["3", "5", "7"];
 
@@ -27,11 +27,10 @@ const RoundsModal = (props: {
     setGameState(newGameState);
   }, [numOfRoundTime]);
 
-  console.log("gameState =", gameState);
-
   return (
     <SettingsModal
       settingsBtnName={settingsBtnName}
+      mainWrapper={styles.mainWrapper}
       modalWrapper={styles.modalWrapper}
       modalContainer={styles.modalContainer}
     >
@@ -65,16 +64,33 @@ const RoundsModal = (props: {
 export default RoundsModal;
 
 const styles = StyleSheet.create({
-  modalWrapper: {
+  mainWrapper: {
     flex: 1,
-    backgroundColor: "#140029",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "black",
   },
 
+  modalWrapper: {
+    height: 932,
+    width: 430,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#140029",
+    border: "solid #a193d945 8px",
+    borderRadius: "15px",
+  },
+
+  // modalWrapper: {
+  //   flex: 1,
+  //   backgroundColor: "#140029",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+
   modalContainer: {
-    flex: 0.35,
-    width: 250,
+    flex: 0.25,
+    width: 320,
     border: ".25rem solid #a193d945",
     borderRadius: 25,
     // backgroundColor: "green",

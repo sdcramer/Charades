@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native-web";
-import { GameState } from "../App";
+import { GameState, IsCard } from "../App";
 
 const CorrectBtn = (props: {
   gameState: GameState;
   setGameState: Function;
   gamePhase: string;
+  requestedGameTopics: Object[];
+  setRequestedGameTopics: Function;
+  setSelectedTopic: Function;
 }) => {
-  const { gameState, setGameState } = props;
+  const {
+    gameState,
+    setGameState,
+    requestedGameTopics,
+    setRequestedGameTopics,
+    setSelectedTopic,
+  } = props;
 
   const correctBtnHandler = () => {
     const newGameState = structuredClone(gameState);
@@ -22,7 +31,16 @@ const CorrectBtn = (props: {
     }
 
     setGameState(newGameState);
+    drawAnotherTopic();
   };
+
+  const drawAnotherTopic = () => {
+    let newArray = [... requestedGameTopics]
+    setSelectedTopic(newArray.pop());
+    setRequestedGameTopics(newArray);
+  };
+
+ 
 
   return (
     <TouchableOpacity onPressIn={correctBtnHandler}>
