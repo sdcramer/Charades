@@ -1,13 +1,13 @@
 import { GameState } from "./App";
 
 export const fetcher = async (query: string) => {
-  const response = await fetch("https://kind-ghost-36.hasura.app/v1/graphql", {
+  const response = await fetch(import.meta.env.VITE_GRAPHQL_EP, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       "x-hasura-admin-secret":
-        "qLVUoVVJtbNjg6zF3vHRPCVD6b5s51P1ycwKYmGRPio9yV3WC6pd6aE7rb0t0fCe",
+        import.meta.env.VITE_API_KEY,
       "X-REQUEST-TYPE": "GraphQL",
     },
     body: JSON.stringify({ query: query }),
