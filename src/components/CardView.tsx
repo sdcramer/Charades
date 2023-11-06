@@ -18,9 +18,10 @@ const CardView = (props: { gameState: GameState; selectedTopic: Object }) => {
 
   return (
     <View style={styles.cardViewContainer}>
-      {gameState.photo === true ? (
+    {gameState.photo === true ? (
         <>
           <Image
+          
             source={`/components/assets/${image_Name}`}
             style={styles.imageStyling}
           ></Image>
@@ -47,9 +48,9 @@ const styles = StyleSheet.create({
   imageStyling: {
     border: "solid #a193d945",
     resizeMode: "stretch",
-    width: "100%",
+    width: '100%',
     borderRadius: 25,
-    flex: 0.85,
+    flex: .85,
   },
 
   // cardViewTextContainer: {
