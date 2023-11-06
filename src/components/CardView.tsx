@@ -22,7 +22,7 @@ const CardView = (props: { gameState: GameState; selectedTopic: Object }) => {
         <>
           <Image
           
-            source={`/components/assets/${image_Name}`}
+            source={`/assets/${image_Name}`}
             style={styles.imageStyling}
           ></Image>
           <Text style={styles.cardViewText}>{topicText}</Text>
