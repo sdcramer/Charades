@@ -20,11 +20,11 @@ export default RoundSettingsSummary;
 
 const styles = StyleSheet.create({
   textContainer: {
-    flex: 1,
-    backgroundColor: 'pink',
+    flex: .5,
+    // backgroundColor: 'pink',
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
 
   text1: {

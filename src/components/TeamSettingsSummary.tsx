@@ -18,11 +18,10 @@ export default TeamSettingsSummary;
 
 const styles = StyleSheet.create({
   teamTextContainer: {
-    flex: 1, 
-    backgroundColor: 'pink',
+    flex: .5, 
+    // backgroundColor: 'pink',
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: "space-evenly",
 
   },
 

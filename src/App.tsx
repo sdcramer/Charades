@@ -236,47 +236,39 @@ const App = () => {
             {/* <OptionsSummary gameState={gameState} /> */}
           </View>
           <View style={styles.settingsBtnsWrapper}>
-            
-              <View style={styles.settingsBtnCard}>
-                <TeamsModal
-                  settingsBtnName={settingsBtnNames[0]}
-                  teamOptions={teamOptions}
-                  gameState={gameState}
-                  setGameState={setGameState}
-                />
-                <View style={styles.summaryContainer}>
-                  <TeamSettingsSummary
-                    gameState={gameState}
-                  />
-                </View>
+            <View style={styles.settingsBtnCard}>
+              <TeamsModal
+                settingsBtnName={settingsBtnNames[0]}
+                teamOptions={teamOptions}
+                gameState={gameState}
+                setGameState={setGameState}
+              />
+              <View style={styles.summaryContainer}>
+                <TeamSettingsSummary gameState={gameState} />
               </View>
-              <View style={styles.settingsBtnCard}>
-                <RoundsModal
-                  settingsBtnName={settingsBtnNames[1]}
-                  gameState={gameState}
-                  setGameState={setGameState}
-                />
-                <View sytle={styles.summaryContainer}>
-                  <RoundSettingsSummary
-                    gameState={gameState}
-                  />
-                </View>
+            </View>
+            <View style={styles.settingsBtnCard}>
+              <RoundsModal
+                settingsBtnName={settingsBtnNames[1]}
+                gameState={gameState}
+                setGameState={setGameState}
+              />
+              <View style={styles.summaryContainer}>
+                <RoundSettingsSummary gameState={gameState} />
               </View>
-              <View style={styles.settingsBtnCard}>
-                <FiltersModal
-                  settingsBtnName={settingsBtnNames[2]}
-                  genericInputNames={genericInputNames}
-                  genericSelectorNames={genericSelectorNames}
-                  categories={categories}
-                  gameState={gameState}
-                  setGameState={setGameState}
-                />
-                <View style={styles.summaryContainer}>
-                  <FilterSettingsSummary
-                    gameState={gameState}
-                  />
-                </View>
-             
+            </View>
+            <View style={styles.settingsBtnCard}>
+              <FiltersModal
+                settingsBtnName={settingsBtnNames[2]}
+                genericInputNames={genericInputNames}
+                genericSelectorNames={genericSelectorNames}
+                categories={categories}
+                gameState={gameState}
+                setGameState={setGameState}
+              />
+              <View style={styles.filterSettingsSummaryContainer}>
+                <FilterSettingsSummary gameState={gameState} />
+              </View>
             </View>
           </View>
           <View style={styles.btnsWrapper}>
@@ -541,12 +533,11 @@ const styles = StyleSheet.create({
   },
 
   settingsBtnsWrapper: {
-    backgroundColor: "red",
+    // backgroundColor: "red",
     flex: 1,
     width: "100%",
     justifyContent: "space-evenly",
-    alignItems: 'center',
-    
+    alignItems: "center",
   },
 
   // settingsBtnsContainer: {
@@ -557,17 +548,24 @@ const styles = StyleSheet.create({
   // },
 
   settingsBtnCard: {
-    backgroundColor: "yellow",
+    // backgroundColor: "yellow",
     flex: 1,
     width: "80%",
     justifyContent: "flex-start",
     alignItems: "center",
-    border: 'solid black',
+    // border: "solid black",
   },
 
   summaryContainer: {
-    backgroundColor: 'blue',
-    width: '100%',
+    // backgroundColor: "blue",
+    width: '50%',
+    flex: .5,
+  },
+
+  filterSettingsSummaryContainer: {
+    // backgroundColor: "teal",
+    width: "75%",
+    flex: 1,
   },
 
   btnsWrapper: {

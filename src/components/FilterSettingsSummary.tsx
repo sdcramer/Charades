@@ -1,34 +1,12 @@
 import { View, Text, ScrollView, FlatList, StyleSheet } from "react-native-web";
-import { useEffect } from 'react';
-import { GameState } from "../App";
 import GameSettings from "./GameSettings";
 
-const FilterSettingsSummary = (props: { gameState: GameState}) => {
+const FilterSettingsSummary = (props: { gameState: Object }) => {
   const { gameState } = props;
 
-
-
-  useEffect(() => {
-    for (let i = 0; i <= gameState.categories.length; i++) {
-     let categoryList = {
-        name: gameState.categories[i]
-      }
-    }
-
-
-
-  }, [gameState.categories]) 
-  
-    
-
-  ;
-
-
-
-
   return (
-    <GameSettings>
-      <View style={styles.textWrapper}>
+    <GameSettings summaryContainer={styles.summaryContainer}>
+      <ScrollView style={styles.scrollViewWrapper}>
         <View style={styles.textContainer}>
           <Text style={styles.text1}>Age:</Text>
           <Text style={styles.text2}>{gameState.age}</Text>
@@ -39,7 +17,6 @@ const FilterSettingsSummary = (props: { gameState: GameState}) => {
             {gameState.year.min} - {gameState.year.max}
           </Text>
         </View>
-
         <View style={styles.textContainer}>
           <Text style={styles.text1}>Photo Mode:</Text>
           <Text style={styles.text2}>
@@ -51,13 +28,12 @@ const FilterSettingsSummary = (props: { gameState: GameState}) => {
             <Text style={styles.text1}>Categories:</Text>
           </View>
           <View style={styles.categoriesContainer}>
-            <FlatList
-              data={gameState}
-              renderItem={renderItem}
-            />
+            <Text style={styles.text2}>
+              {gameState.categories.join(", ").toString()}
+            </Text>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </GameSettings>
   );
 };
@@ -65,31 +41,32 @@ const FilterSettingsSummary = (props: { gameState: GameState}) => {
 export default FilterSettingsSummary;
 
 const styles = StyleSheet.create({
-  textWrapper: {
-    // backgroundColor: 'orange',
-
-    
+  scrollViewWrapper: {
+    flex: 1,
+    // backgroundColor: "#a193d925",
   },
 
   textContainer: {
-    // backgroundColor: 'pink',
-    flexDirection: 'row',
-    flex: 1,
+    // backgroundColor: "pink",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // border: "solid black",
+    // flex: 2,
   },
 
   categoryContainer: {
-    backgroundColor: 'purple'
+    // backgroundColor: "purple",
+    flexDirection: "row",
+    flex: 0.6,
   },
 
-
-
   categoriesContainer: {
-    // backgroundColor: 'pink',
-    flex: 11,
+    // backgroundColor: "green",
+    flex: 1.2,
     flexDirection: "row",
     justifyContent: "flex-end",
-    alignContent: 'center',
-    flexWrap: 'wrap',
+    alignContent: "center",
+    // flexWrap: "wrap",
   },
 
   text1: {
