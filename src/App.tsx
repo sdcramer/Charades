@@ -533,10 +533,10 @@ const styles = StyleSheet.create({
   },
 
   settingsBtnsWrapper: {
-    // backgroundColor: "red",
+    // backgroundColor: "#a193d925",
     flex: 1,
     width: "100%",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     alignItems: "center",
   },
 
@@ -548,24 +548,25 @@ const styles = StyleSheet.create({
   // },
 
   settingsBtnCard: {
-    // backgroundColor: "yellow",
-    flex: 1,
+    // backgroundColor: "pink",
+    flex: .4,
     width: "80%",
-    justifyContent: "flex-start",
     alignItems: "center",
     // border: "solid black",
   },
 
   summaryContainer: {
     // backgroundColor: "blue",
-    width: '50%',
-    flex: .5,
+    width: "50%",
+    flex: 0.5,
   },
 
   filterSettingsSummaryContainer: {
     // backgroundColor: "teal",
-    width: "75%",
+    paddingTop: 5,
+    width: "50%",
     flex: 1,
+    justifyContent: "flex-end",
   },
 
   btnsWrapper: {

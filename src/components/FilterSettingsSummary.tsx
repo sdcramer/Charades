@@ -7,6 +7,7 @@ const FilterSettingsSummary = (props: { gameState: Object }) => {
   return (
     <GameSettings summaryContainer={styles.summaryContainer}>
       <ScrollView style={styles.scrollViewWrapper}>
+        
         <View style={styles.textContainer}>
           <Text style={styles.text1}>Age:</Text>
           <Text style={styles.text2}>{gameState.age}</Text>
@@ -23,16 +24,17 @@ const FilterSettingsSummary = (props: { gameState: Object }) => {
             {gameState.photo === true ? "On" : "Off"}
           </Text>
         </View>
-        <View style={styles.textContainer}>
-          <View style={styles.categoryContainer}>
-            <Text style={styles.text1}>Categories:</Text>
+          <View style={styles.textContainer}>
+            <View style={styles.categoryContainer}>
+              <Text style={styles.text1}>Categories:</Text>
+            </View>
+            <View style={styles.categoriesContainer}>
+              <Text style={styles.text2}>
+                {gameState.categories.join(", ").toString()}
+              </Text>
+            </View>
           </View>
-          <View style={styles.categoriesContainer}>
-            <Text style={styles.text2}>
-              {gameState.categories.join(", ").toString()}
-            </Text>
-          </View>
-        </View>
+        
       </ScrollView>
     </GameSettings>
   );
@@ -46,10 +48,18 @@ const styles = StyleSheet.create({
     // backgroundColor: "#a193d925",
   },
 
+  textWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    // backgroundColor: 'teal',
+  },
+
+
   textContainer: {
     // backgroundColor: "pink",
     flexDirection: "row",
     justifyContent: "space-between",
+    // alignItems: 'flex-end',
     // border: "solid black",
     // flex: 2,
   },
@@ -57,12 +67,12 @@ const styles = StyleSheet.create({
   categoryContainer: {
     // backgroundColor: "purple",
     flexDirection: "row",
-    flex: 0.6,
+    flex: .9,
   },
 
   categoriesContainer: {
     // backgroundColor: "green",
-    flex: 1.2,
+    flex: 1.1,
     flexDirection: "row",
     justifyContent: "flex-end",
     alignContent: "center",
