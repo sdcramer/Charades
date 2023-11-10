@@ -33,6 +33,9 @@ const RoundsModal = (props: {
       mainWrapper={styles.mainWrapper}
       modalWrapper={styles.modalWrapper}
       modalContainer={styles.modalContainer}
+      modalEmptyViewContainer={styles.modalEmptyViewContainer}
+      modalPressableWrapper={styles.modalPressableWrapper}
+      modalDoneBtnWrapper={styles.modalDoneBtnWrapper}
     >
       <GenericSelector
         options={roundOptions}
@@ -89,13 +92,30 @@ const styles = StyleSheet.create({
   // },
 
   modalContainer: {
-    flex: 0.25,
+    flex: 1,
     width: 320,
     border: ".25rem solid #a193d945",
     borderRadius: 25,
     // backgroundColor: "green",
     alignItems: "center",
     justifyContent: "space-around",
+  },
+
+  modalEmptyViewContainer: {
+    flex: 1,
+    widht: "100%",
+  },
+
+  modalPressableWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalDoneBtnWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   pressableWrapper: {

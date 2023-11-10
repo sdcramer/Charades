@@ -8,16 +8,19 @@ import {
   StyleSheet,
 } from "react-native-web";
 import { useState } from "react";
-import GenericBtn from "./GenericBtn";
+
 
 const SettingsModal = (props: {
   settingsBtnName: string;
   mainWrapper: Object;
   modalWrapper: Object;
   modalContainer: Object;
+  modalEmptyViewContainer: Object;
+  modalPressableWrapper: Object;
+  modalDoneBtnWrapper: Object;
   children: JSX.Element[] | JSX.Element;
 }) => {
-  const { settingsBtnName, mainWrapper, modalWrapper, modalContainer } = props;
+  const { settingsBtnName, mainWrapper, modalWrapper, modalContainer, modalEmptyViewContainer, modalPressableWrapper, modalDoneBtnWrapper } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
@@ -36,24 +39,27 @@ const SettingsModal = (props: {
         statusBarTranslucent={true}
         animationType={"fade"}
       >
-        <TouchableWithoutFeedback
-          onPress={() => {
-            setIsModalVisible(!isModalVisible);
-          }}
-        >
-          <View style={mainWrapper}>
-            <View style={modalWrapper}>
-              {/* Option to add explicit button to close modal */}
-              {/* <TouchableOpacity
+        <View style={mainWrapper}>
+          <View style={modalWrapper}>
+            {/* <TouchableOpacity
                   onPress={() => setIsModalVisible(!isModalVisible)}
                   >
                   <Text style={styles.modalToggle}>X</Text>
                 </TouchableOpacity> */}
-
+            <View style={modalEmptyViewContainer}></View>
+            <View style={modalPressableWrapper}>
               <Pressable style={modalContainer}>{props.children}</Pressable>
             </View>
+            <View style={modalDoneBtnWrapper}>
+              <TouchableOpacity
+                onPress={() => setIsModalVisible(!isModalVisible)}
+                style={styles.doneBtnContainer}
+              >
+                <Text style={styles.doneBtnText}>Done</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       </Modal>
     </>
   );
@@ -62,9 +68,11 @@ const SettingsModal = (props: {
 export default SettingsModal;
 
 const styles = StyleSheet.create({
+
+
   settingsBtnContainer: {
     backgroundColor: "#5E3AC7",
-    height: "85%",
+    height: 40,
     width: 150,
     borderRadius: 10,
     justifyContent: "center",
@@ -75,5 +83,27 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     textAlign: "center",
+  },
+
+  doneBtnWrapper: {
+    flex: .5,
+    // backgroundColor: "green",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  doneBtnContainer: {
+    backgroundColor: "#5E3AC7",
+    height: 40,
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+  },
+
+  doneBtnText: {
+    fontSize: 18,
+    color: "white",
   },
 });

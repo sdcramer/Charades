@@ -24,6 +24,10 @@ import MissedBtn from "./components/MissedBtn";
 import QuitModal from "./components/QuitModal";
 import Counter from "./components/Counter";
 import GameSummary from "./components/GameSummary";
+import OptionsSummary from "./components/OptionsSummary1";
+import TeamSettingsSummary from "./components/TeamSettingsSummary";
+import RoundSettingsSummary from "./components/RoundSettingsSummary";
+import FilterSettingsSummary from "./components/FilterSettingsSummary";
 import { fetcher, buildGetTopicsQuery } from "./fetchHelper";
 
 export interface Category {
@@ -88,7 +92,7 @@ const App = () => {
     rounds: 3,
     currentRound: 1,
     roundTime: 30,
-    age: "",
+    age: "Kids",
     year: {
       min: 0,
       max: 0,
@@ -228,9 +232,11 @@ const App = () => {
     return (
       <View style={styles.mainWrapper}>
         <SafeAreaView style={styles.mainContainer}>
-          <View style={styles.emptyViewContainer}></View>
+          <View style={styles.emptyViewContainer}>
+            {/* <OptionsSummary gameState={gameState} /> */}
+          </View>
           <View style={styles.settingsBtnsWrapper}>
-            <View style={styles.settingsBtnsContainer}>
+            
               <View style={styles.settingsBtnCard}>
                 <TeamsModal
                   settingsBtnName={settingsBtnNames[0]}
@@ -238,6 +244,11 @@ const App = () => {
                   gameState={gameState}
                   setGameState={setGameState}
                 />
+                <View style={styles.summaryContainer}>
+                  <TeamSettingsSummary
+                    gameState={gameState}
+                  />
+                </View>
               </View>
               <View style={styles.settingsBtnCard}>
                 <RoundsModal
@@ -245,6 +256,11 @@ const App = () => {
                   gameState={gameState}
                   setGameState={setGameState}
                 />
+                <View sytle={styles.summaryContainer}>
+                  <RoundSettingsSummary
+                    gameState={gameState}
+                  />
+                </View>
               </View>
               <View style={styles.settingsBtnCard}>
                 <FiltersModal
@@ -255,7 +271,12 @@ const App = () => {
                   gameState={gameState}
                   setGameState={setGameState}
                 />
-              </View>
+                <View style={styles.summaryContainer}>
+                  <FilterSettingsSummary
+                    gameState={gameState}
+                  />
+                </View>
+             
             </View>
           </View>
           <View style={styles.btnsWrapper}>
@@ -319,6 +340,11 @@ const App = () => {
               <Text style={styles.preTurnMessageText}>
                 Team {gameState.currentTeamsTurn} get ready!
               </Text>
+              <View style={styles.actorMessageContainer}>
+                <Text style={styles.actorMessageText}>
+                  The actor should now see this screen and press continue
+                </Text>
+              </View>
             </View>
             {gameState.currentRound === 1 &&
             gameState.currentTeamsTurn === 1 ? null : (
@@ -508,30 +534,40 @@ const styles = StyleSheet.create({
     // border: "solid white",
     // backgroundColor: "white",
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     width: "100%",
+    //
   },
 
   settingsBtnsWrapper: {
-    // backgroundColor: "red",
+    backgroundColor: "red",
     flex: 1,
     width: "100%",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    alignItems: 'center',
+    
   },
 
-  settingsBtnsContainer: {
-    // backgroundColor: "green",
-    height: "80%",
-    width: "100%",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
+  // settingsBtnsContainer: {
+  //   backgroundColor: "green",
+  //   flex: 1,
+  //   justifyContent: "space-evenly",
+  //   alignItems: "center",
+  // },
 
   settingsBtnCard: {
-    // backgroundColor: "yellow",
-    height: "23%",
-    width: 110,
-    justifyContent: "center",
+    backgroundColor: "yellow",
+    flex: 1,
+    width: "80%",
+    justifyContent: "flex-start",
     alignItems: "center",
+    border: 'solid black',
+  },
+
+  summaryContainer: {
+    backgroundColor: 'blue',
+    width: '100%',
   },
 
   btnsWrapper: {
@@ -582,6 +618,21 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#a193d9",
     fontFamily: "HennyPenny-Regular",
+  },
+
+  actorMessageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 0.5,
+    width: "90%",
+    // backgroundColor: 'pink',
+  },
+
+  actorMessageText: {
+    fontSize: 14,
+    fontStyle: "italic",
+    color: "#a193d9",
+    textAlign: "center",
   },
 
   gameOverTextContainer: {
@@ -670,22 +721,20 @@ const styles = StyleSheet.create({
 
   navBarWrapper: {
     width: "100%",
-    flex: .85,
-    justifyContent: 'flex-start',
+    flex: 0.85,
+    justifyContent: "flex-start",
     alignItems: "flex-start",
     // backgroundColor: "red",
   },
 
   navBarContainer: {
-    width: '100%',
-    flex: .55,
+    width: "100%",
+    flex: 0.55,
     // backgroundColor: 'blue',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
     // paddingTop: 10,
   },
-
-
 
   cardViewWrapper: {
     // backgroundColor: "orange",

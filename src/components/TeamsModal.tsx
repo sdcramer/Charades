@@ -37,6 +37,9 @@ const TeamsModal = (props: {
       mainWrapper={styles.mainWrapper}
       modalWrapper={styles.modalWrapper}
       modalContainer={styles.modalContainer}
+      modalEmptyViewContainer={styles.modalEmptyViewContainer}
+      modalPressableWrapper={styles.modalPressableWrapper}
+      modalDoneBtnWrapper={styles.modalDoneBtnWrapper}
     >
       <GenericSelector
         options={teamOptions}
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   modalWrapper: {
     height: 932,
     width: 430,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#140029",
     border: "solid #a193d945 8px",
@@ -82,11 +85,29 @@ const styles = StyleSheet.create({
 
   modalContainer: {
     // backgroundColor:'green',
-    flex: 0.25,
+    flex: 1,
     width: 320,
     justifyContent: "center",
     border: ".25rem solid #a193d945",
     borderRadius: 25,
+    // backgroundColor: 'blue',
+  },
+
+  modalEmptyViewContainer: {
+    flex: 1,
+    widht: "100%",
+  },
+
+  modalPressableWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalDoneBtnWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   pressableWrapper: {
@@ -119,5 +140,12 @@ const styles = StyleSheet.create({
   optionSelected: {
     color: "magenta",
     fontSize: 20,
+  },
+
+  teamTextContainer: {
+    width: "60%",
+    flexDirection: "row",
+    // backgroundColor: "red",
+    justifyContent: "space-between",
   },
 });

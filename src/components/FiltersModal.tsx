@@ -33,10 +33,10 @@ const FiltersModal = (props: {
   const [isPhotoMode, setIsPhotoMode] = useState(true);
   const [searchCategories, setSearchCategories] = useState<Category[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [ageGroup, setAgeGroup] = useState<"kids" | "teens" | "adults">("kids");
-  const [minYear, setMinYear] = useState <number>();
+  const [ageGroup, setAgeGroup] = useState<"Kids" | "Teens" | "Adults">("Kids");
+  const [minYear, setMinYear] = useState<number>();
   const [maxYear, setMaxYear] = useState<number>();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(["Animals", "Food"]);
 
   useEffect(() => {
     setSearchCategories(categories);
@@ -64,30 +64,25 @@ const FiltersModal = (props: {
     newGameState.photo = isPhotoMode;
     setGameState(newGameState);
   }, [isPhotoMode]);
-  
+
   useEffect(() => {
     const newGameState = structuredClone(gameState);
     newGameState.categories = selectedCategories;
     setGameState(newGameState);
   }, [selectedCategories]);
 
-
-
   const categoryHandler = (itemName: string) => {
     let newSelectedCategories;
     if (selectedCategories.includes(itemName)) {
-      newSelectedCategories = selectedCategories.filter((category) => category !== itemName);
+      newSelectedCategories = selectedCategories.filter(
+        (category) => category !== itemName
+      );
     } else {
-      newSelectedCategories = [...selectedCategories, itemName]
+      newSelectedCategories = [...selectedCategories, itemName];
     }
     setSelectedCategories(newSelectedCategories);
     setSearchCategories(categories);
-}
-
-
-
-
-
+  };
 
   // const categoryHandler = (itemName: string) => {
   //   if (selectedCategories.includes(itemName)) {
@@ -110,29 +105,28 @@ const FiltersModal = (props: {
   //   setSearchCategories(categories)
   //   return null;
   // };
-  
+
   // console.log(
   //   "3. selectedCategories at end of handler =",
   //   selectedCategories
   // );
 
+  // selected category is passed into categoryHandler function
+  // need to capture selected category and add it to an array
+  //.push(categoryName)
 
-    // selected category is passed into categoryHandler function
-    // need to capture selected category and add it to an array
-    //.push(categoryName)
-    
-    // variable storing array of selected category names cannot be reset each time the function runs
-    // at start of function set the variable storing the array of category names to the state variable that also stores an array of the selected category names
-    
-    // dedupe array by checking if selected category name already exists within array; if so remove it.
-    // if (array.includes(categoryName) {
-      //  array.filter( () => )
-      //} else {
-        //  array.push(categoryName)
-        //}
-        
-        // save array containing selected categories to state variable selectedCategories.
-        // reset searchbar with empty " " after selection is made
+  // variable storing array of selected category names cannot be reset each time the function runs
+  // at start of function set the variable storing the array of category names to the state variable that also stores an array of the selected category names
+
+  // dedupe array by checking if selected category name already exists within array; if so remove it.
+  // if (array.includes(categoryName) {
+  //  array.filter( () => )
+  //} else {
+  //  array.push(categoryName)
+  //}
+
+  // save array containing selected categories to state variable selectedCategories.
+  // reset searchbar with empty " " after selection is made
 
   // const categoryHandler = (itemName: string) => {
   //   let chosenCategories = selectedCategories;
@@ -181,6 +175,9 @@ const FiltersModal = (props: {
       mainWrapper={styles.mainWrapper}
       modalWrapper={styles.modalWrapper}
       modalContainer={styles.modalContainer}
+      modalEmptyViewContainer={styles.modalEmptyViewContainer}
+      modalPressableWrapper={styles.modalPressableWrapper}
+      modalDoneBtnWrapper={styles.modalDoneBtnWrapper}
       // setStateFunction={setGamePhase}
     >
       <GenericSelector
@@ -265,12 +262,12 @@ export default FiltersModal;
 
 const styles = StyleSheet.create({
   mainWrapper: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "black",
-    },
-  
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
+  },
+
   modalWrapper: {
     height: 932,
     width: 430,
@@ -289,10 +286,29 @@ const styles = StyleSheet.create({
   // },
 
   modalContainer: {
-    flex: 0.8,
+    flex: 1,
     width: 320,
     border: ".25rem solid #a193d945",
     borderRadius: 25,
+  },
+
+  modalEmptyViewContainer: {
+    flex: 0.2,
+    width: "100%",
+  },
+
+  modalPressableWrapper: {
+    flex: 1.8,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  modalDoneBtnWrapper: {
+    flex: .5, 
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   pressableWrapper: {
