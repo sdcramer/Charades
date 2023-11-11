@@ -326,15 +326,21 @@ const App = () => {
           <View style={styles.emptyViewContainer}></View>
           <View style={styles.preTurnRoundTextContainer}>
             <View style={styles.preTurnRoundTextWrapper}>
-              <Text style={styles.preTurnRoundText}>
-                Round {gameState.currentRound}
-              </Text>
-              <Text style={styles.preTurnMessageText}>
-                Team {gameState.currentTeamsTurn} get ready!
-              </Text>
+              <View style={styles.preRoundTextCard}>
+                <View style={styles.preTurnRoundContainer}>
+                  <Text style={styles.preTurnRoundText}>
+                    Round {gameState.currentRound}
+                  </Text>
+                </View>
+                <View style={styles.preTurnReadyContainer}>
+                  <Text style={styles.preTurnMessageText}>
+                    Team {gameState.currentTeamsTurn} get ready!
+                  </Text>
+                </View>
+              </View>
               <View style={styles.actorMessageContainer}>
                 <Text style={styles.actorMessageText}>
-                  The actor should now see this screen and press continue
+                  (Only the actor should see this screen and press continue)
                 </Text>
               </View>
             </View>
@@ -549,7 +555,7 @@ const styles = StyleSheet.create({
 
   settingsBtnCard: {
     // backgroundColor: "pink",
-    flex: .4,
+    flex: 0.4,
     width: "80%",
     alignItems: "center",
     // border: "solid black",
@@ -613,6 +619,21 @@ const styles = StyleSheet.create({
   //   alignItems: "center",
   // },
 
+  preTurnRoundContainer: {
+    // backgroundColor: "pink",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "80%",
+  },
+
+  preTurnReadyContainer: {
+    // backgroundColor: "gray",
+    width: "80%",
+    flex: 1,
+    alignItems: "center",
+  },
+
   preTurnMessageText: {
     fontSize: 25,
     color: "#a193d9",
@@ -622,9 +643,9 @@ const styles = StyleSheet.create({
   actorMessageContainer: {
     justifyContent: "center",
     alignItems: "center",
-    flex: 0.5,
-    width: "90%",
-    // backgroundColor: 'pink',
+    flex: 1,
+    width: "50%",
+    // backgroundColor: "orange",
   },
 
   actorMessageText: {
@@ -674,9 +695,16 @@ const styles = StyleSheet.create({
 
   preTurnRoundTextWrapper: {
     flex: 0.5,
-    // backgroundColor: 'pink',
+    // backgroundColor: "pink",
     width: "100%",
     justifyContent: "center",
+    alignItems: "center",
+  },
+
+  preRoundTextCard: {
+    flex: 1,
+    // backgroundColor: "purple",
+    width: "80%",
     alignItems: "center",
   },
 
