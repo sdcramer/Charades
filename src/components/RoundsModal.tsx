@@ -12,8 +12,8 @@ const RoundsModal = (props: {
 
   const [numOfRounds, setNumOfRounds] = useState<3 | 5 | 7>(3);
   const [numOfRoundTime, setNumOfRoundTime] = useState<30 | 60 | 90>(30);
-  const roundTimes = ["30", "60", "90"];
-  const roundOptions = ["3", "5", "7"];
+  const roundTimes = [30, 60, 90];
+  const roundOptions = [3, 5, 7];
 
   useEffect(() => {
     const newGameState = structuredClone(gameState);
