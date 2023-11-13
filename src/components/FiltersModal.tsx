@@ -51,6 +51,7 @@ const FiltersModal = (props: {
   useEffect(() => {
     const newGameState = structuredClone(gameState);
     newGameState.year.min = minYear;
+    setGameState(newGameState)
   }, [minYear]);
 
   useEffect(() => {
