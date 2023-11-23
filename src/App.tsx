@@ -24,7 +24,7 @@ import MissedBtn from "./components/MissedBtn";
 import QuitModal from "./components/QuitModal";
 import Counter from "./components/Counter";
 import GameSummary from "./components/GameSummary";
-import OptionsSummary from "./components/OptionsSummary1";
+import OptionsSummary from "./components/OptionsSummary";
 import TeamSettingsSummary from "./components/TeamSettingsSummary";
 import RoundSettingsSummary from "./components/RoundSettingsSummary";
 import FilterSettingsSummary from "./components/FilterSettingsSummary";

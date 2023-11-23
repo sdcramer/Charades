@@ -18,7 +18,6 @@ const ContinueBtn = (props: {
       setGamePhase("preTurn");
     } else {
       newGameState.currentTeamsTurn = 1;
-
       setGamePhase("preTurn");
       if (newGameState.currentRound < newGameState.rounds) {
         newGameState.currentRound = newGameState.currentRound + 1;
@@ -41,7 +40,7 @@ const ContinueBtn = (props: {
         }
 
         // console.log("tie occurred; 0.1 added to a team's score", teamsArr);
-        // console.log("newGameState just before sort", newGameState);
+  
       }
       return b[1].score - a[1].score;
     });
