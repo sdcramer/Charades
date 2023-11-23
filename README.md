@@ -1,15 +1,16 @@
 # Charades
-
-### **Table of Contents**
-
-1. [About](https://github.com/sdcramer/Charades/blob/main/README.md#h3-about)
-2. [Built With](https://github.com/sdcramer/Charades/blob/main/README.md#h3-built-with)
-3. [Usage](https://github.com/sdcramer/Charades/blob/main/README.md#h3-usage)
-4. [Roadmap](https://github.com/sdcramer/Charades/blob/main/README.md#h3-roadmap)
-5. [License](https://github.com/sdcramer/Charades/blob/main/README.md#h3-license)
-6. [Contact](https://github.com/sdcramer/Charades/blob/main/README.md#h3-contact)
+<details>
+<summary>Table of Contents</summary>
 
 
+1. [About](https://github.com/sdcramer/Charades/blob/main/README.md#about)
+2. [Built With](https://github.com/sdcramer/Charades/blob/main/README.md#built-with)
+3. [Usage](https://github.com/sdcramer/Charades/blob/main/README.md#usage)
+4. [Roadmap](https://github.com/sdcramer/Charades/blob/main/README.md#roadmap)
+5. [License](https://github.com/sdcramer/Charades/blob/main/README.md#license)
+6. [Contact](https://github.com/sdcramer/Charades/blob/main/README.md#contact)
+
+</details>
 
 ### **About**
 This is a classic take on Charades. It is very much still in an MVP/Alpha version but future updates are in the works. The goal was to create a game that had a simple, straightforward UI, that captured the traditional feel of the game yet catered to all ages by offering some different game options and customizations.
@@ -35,7 +36,7 @@ Cheers,
 ### **Built With**
 
 ![Alt text](vite.png)
-![Alt text](image.png)
+![Alt text](react.png)
 
 
 
@@ -54,7 +55,8 @@ Demo: https://merry-crostata-62c6b8.netlify.app/
 ### **Roadmap**
 
 - [ ] Add media queries for a responsive design
-- [ ] Add a login screen
+- [ ] Host images on a database
+- [ ] Add a login screen w/ an Auth0 security layer
 - [ ] Add additional categories/decks
 - [ ] Publish
 
